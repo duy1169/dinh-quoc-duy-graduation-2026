@@ -9,124 +9,489 @@
 <title>Đinh Quốc Duy | Graduation 2026</title>
 
 <style>
-:root{--bg:#090d16;--panel:#111927;--panel2:#172235;--gold:#d8b77b;--gold2:#f2dfb8;--white:#f5f1e9;--muted:#aeb8c7;--line:#ffffff20}
+:root{
+  --bg:#090d16;
+  --panel:#111927;
+  --panel2:#172235;
+  --gold:#d8b77b;
+  --gold2:#f2dfb8;
+  --white:#f5f1e9;
+  --muted:#aeb8c7;
+  --line:#ffffff20;
+}
+
 *{box-sizing:border-box}
+
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;line-height:1.65;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 75% 10%,#29364b55,transparent 40%),radial-gradient(ellipse at 15% 65%,#8d6b3b18,transparent 35%)}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--white);
+  font-family:Arial,sans-serif;
+  line-height:1.65;
+  overflow-x:hidden;
+  letter-spacing:normal;
+  word-spacing:normal;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    radial-gradient(ellipse at 75% 10%,#29364b55,transparent 40%),
+    radial-gradient(ellipse at 15% 65%,#8d6b3b18,transparent 35%);
+}
+
 a{color:inherit;text-decoration:none}
+
 .container{width:min(1120px,90%);margin:auto}
-.topbar{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
-.brand{font-size:.72rem;letter-spacing:.24em;color:var(--gold);font-weight:800}
-.nav{display:flex;gap:25px;color:var(--muted);font-size:.84rem}
+
+.topbar{
+  height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+}
+
+.brand{
+  font-size:.72rem;
+  letter-spacing:.12em;
+  color:var(--gold);
+  font-weight:800;
+}
+
+.nav{
+  display:flex;
+  gap:25px;
+  color:var(--muted);
+  font-size:.84rem;
+  letter-spacing:normal;
+}
+
 .nav a:hover{color:var(--gold2)}
 
-.hero{min-height:calc(100vh - 78px);display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center;padding:65px 0 85px}
-.kicker{color:var(--gold);letter-spacing:.24em;text-transform:uppercase;font-size:.72rem;font-weight:700}
-.hero h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(3.7rem,8vw,7.2rem);line-height:1.08;letter-spacing:normal;word-spacing:normal;margin:24px 0 20px}
+.hero{
+  min-height:calc(100vh - 78px);
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:55px;
+  align-items:center;
+  padding:65px 0 85px;
+}
+
+.kicker{
+  color:var(--gold);
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-size:.72rem;
+  font-weight:700;
+}
+
+.hero h1{
+  font-family:Georgia,serif;
+  font-weight:400;
+  font-size:clamp(3.7rem,8vw,7.2rem);
+  line-height:1.08;
+  letter-spacing:normal;
+  word-spacing:normal;
+  margin:24px 0 20px;
+}
+
 .hero h1 em{color:var(--gold);font-weight:400}
-.hero .sub{font:clamp(1.05rem,2vw,1.35rem) Georgia,serif;color:#d7d4cc}
-.intro{color:var(--muted);max-width:570px;font-size:.98rem}
-.hero-actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 19px;border:1px solid #d8b77b88;border-radius:3px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;transition:.25s}
-.btn.primary{background:var(--gold);color:#17130d;border-color:var(--gold);font-weight:800}
-.btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px #0006}
 
-.portrait-wrap{position:relative;max-width:430px;width:100%;justify-self:end}
-.portrait-frame{aspect-ratio:4/5;border:1px solid #d8b77b77;padding:12px;position:relative;background:linear-gradient(145deg,#35445a,#111927 55%,#6c5334)}
-.portrait-frame:before{content:"";position:absolute;inset:22px;border:1px solid #d8b77b55;pointer-events:none;z-index:2}
-.portrait-placeholder{height:100%;min-height:390px;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column;background:linear-gradient(160deg,#26364b,#111827 62%,#4a3b2b);color:var(--gold2);padding:24px;position:relative;overflow:hidden}
-.portrait-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center;position:absolute;inset:0}
-.portrait-caption{display:flex;justify-content:space-between;color:var(--muted);font-size:.7rem;letter-spacing:.12em;padding:13px 2px}
-.side-note{position:absolute;right:-35px;bottom:80px;writing-mode:vertical-rl;color:#d8b77b99;letter-spacing:.28em;font-size:.62rem}
+.hero .sub{
+  font:clamp(1.05rem,2vw,1.35rem) Georgia,serif;
+  color:#d7d4cc;
+}
 
-.section{padding:100px 0;border-top:1px solid var(--line)}
-.section-head{max-width:720px;margin-bottom:38px}
-.section h2{font:clamp(2.5rem,5vw,4.3rem)/1.15 Georgia,serif;font-weight:400;letter-spacing:normal;word-spacing:normal;margin:15px 0}
+.intro{
+  color:var(--muted);
+  max-width:570px;
+  font-size:.98rem;
+}
+
+.hero-actions{
+  display:flex;
+  gap:13px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 19px;
+  border:1px solid #d8b77b88;
+  border-radius:3px;
+  font-size:.78rem;
+  letter-spacing:normal;
+  text-transform:uppercase;
+  transition:.25s;
+}
+
+.btn.primary{
+  background:var(--gold);
+  color:#17130d;
+  border-color:var(--gold);
+  font-weight:800;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 35px #0006;
+}
+
+.portrait-wrap{
+  position:relative;
+  max-width:430px;
+  width:100%;
+  justify-self:end;
+}
+
+.portrait-frame{
+  aspect-ratio:4/5;
+  border:1px solid #d8b77b77;
+  padding:12px;
+  position:relative;
+  background:linear-gradient(145deg,#35445a,#111927 55%,#6c5334);
+}
+
+.portrait-frame:before{
+  content:"";
+  position:absolute;
+  inset:22px;
+  border:1px solid #d8b77b55;
+  pointer-events:none;
+  z-index:2;
+}
+
+.portrait-placeholder{
+  height:100%;
+  min-height:390px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  flex-direction:column;
+  background:linear-gradient(160deg,#26364b,#111827 62%,#4a3b2b);
+  color:var(--gold2);
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+}
+
+.portrait-placeholder img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  position:absolute;
+  inset:0;
+}
+
+.portrait-caption{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:.7rem;
+  letter-spacing:.06em;
+  padding:13px 2px;
+}
+
+.side-note{
+  position:absolute;
+  right:-35px;
+  bottom:80px;
+  writing-mode:vertical-rl;
+  color:#d8b77b99;
+  letter-spacing:.12em;
+  font-size:.62rem;
+}
+
+.section{
+  padding:100px 0;
+  border-top:1px solid var(--line);
+}
+
+.section-head{
+  max-width:720px;
+  margin-bottom:38px;
+}
+
+.section h2{
+  font:clamp(2.5rem,5vw,4.3rem)/1.15 Georgia,serif;
+  font-weight:400;
+  letter-spacing:normal;
+  word-spacing:normal;
+  margin:15px 0;
+}
+
 .section h2 em{color:var(--gold);font-weight:400}
-.section-lead{color:var(--muted);max-width:700px}
-.eyebrow{color:var(--gold);letter-spacing:.22em;text-transform:uppercase;font-size:.68rem;font-weight:700}
 
-.about-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:60px;align-items:start}
-.big-number{font:clamp(5rem,12vw,9rem)/.9 Georgia,serif;color:#d8b77b33}
-.about-copy{font:1.25rem/1.8 Georgia,serif;color:#e5e0d6}
+.section-lead{
+  color:var(--muted);
+  max-width:700px;
+}
+
+.eyebrow{
+  color:var(--gold);
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  font-size:.68rem;
+  font-weight:700;
+}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:.7fr 1.3fr;
+  gap:60px;
+  align-items:start;
+}
+
+.big-number{
+  font:clamp(5rem,12vw,9rem)/.9 Georgia,serif;
+  color:#d8b77b33;
+}
+
+.about-copy{
+  font:1.25rem/1.8 Georgia,serif;
+  color:#e5e0d6;
+}
+
 .about-copy p{margin-top:0}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}
-.fact{padding:19px;background:linear-gradient(145deg,#182337,#101725);border:1px solid var(--line)}
-.fact small{display:block;color:var(--gold);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase}
-.fact strong{display:block;font:1.02rem Georgia,serif;margin-top:8px}
 
-.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.step{padding:25px 22px;border:1px solid var(--line);background:linear-gradient(145deg,#172235,#101622);min-height:205px}
-.step .n{font:2.3rem Georgia,serif;color:var(--gold)}
-.step h3{font:1.35rem Georgia,serif;font-weight:400;margin:12px 0 7px}
-.step p{color:var(--muted);font-size:.9rem;margin:0}
+.facts{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:35px;
+}
 
-.gallery{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
-.photo{min-height:280px;background:linear-gradient(145deg,#25364b,#101725);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:20px;position:relative;overflow:hidden}
+.fact{
+  padding:19px;
+  background:linear-gradient(145deg,#182337,#101725);
+  border:1px solid var(--line);
+}
+
+.fact small{
+  display:block;
+  color:var(--gold);
+  font-size:.64rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.fact strong{
+  display:block;
+  font:1.02rem Georgia,serif;
+  margin-top:8px;
+}
+
+.timeline{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.step{
+  padding:25px 22px;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,#172235,#101622);
+  min-height:205px;
+}
+
+.step .n{
+  font:2.3rem Georgia,serif;
+  color:var(--gold);
+}
+
+.step h3{
+  font:1.35rem Georgia,serif;
+  font-weight:400;
+  margin:12px 0 7px;
+}
+
+.step p{
+  color:var(--muted);
+  font-size:.9rem;
+  margin:0;
+}
+
+.gallery{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:16px;
+}
+
+.photo{
+  min-height:280px;
+  background:linear-gradient(145deg,#25364b,#101725);
+  border:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--muted);
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+}
+
 .photo.tall{min-height:430px}
-.photo img{width:100%;height:100%;object-fit:cover;object-position:center;position:absolute;inset:0}
-.photo-label{position:absolute;bottom:14px;left:17px;color:#fff;background:#090d16b8;padding:5px 10px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;z-index:1}
 
-.wish{background:linear-gradient(120deg,#151f30,#0d121d);border:1px solid #d8b77b55;padding:clamp(28px,6vw,65px);text-align:center}
-.wish blockquote{font:clamp(1.6rem,3.4vw,2.7rem)/1.45 Georgia,serif;color:var(--gold2);margin:0 auto 22px;max-width:850px}
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  position:absolute;
+  inset:0;
+}
+
+.photo-label{
+  position:absolute;
+  bottom:14px;
+  left:17px;
+  color:#fff;
+  background:#090d16b8;
+  padding:5px 10px;
+  font-size:.68rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  z-index:1;
+}
+
+.wish{
+  background:linear-gradient(120deg,#151f30,#0d121d);
+  border:1px solid #d8b77b55;
+  padding:clamp(28px,6vw,65px);
+  text-align:center;
+}
+
+.wish blockquote{
+  font:clamp(1.6rem,3.4vw,2.7rem)/1.45 Georgia,serif;
+  color:var(--gold2);
+  margin:0 auto 22px;
+  max-width:850px;
+}
+
 .wish p{color:var(--muted);margin:0}
 
-.music{position:fixed;right:20px;bottom:20px;z-index:5;background:#111927ed;border:1px solid #d8b77b77;padding:10px 13px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 30px #0008}
-.music button{background:transparent;border:0;color:var(--gold2);font-size:.8rem;cursor:pointer}
-.music small{color:var(--muted);font-size:.65rem}
+.music{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:5;
+  background:#111927ed;
+  border:1px solid #d8b77b77;
+  padding:10px 13px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 8px 30px #0008;
+}
 
-footer{padding:75px 0 45px;text-align:center;color:var(--muted)}
-footer .signature{font:2.2rem Georgia,serif;color:var(--gold);margin:13px 0}
-footer .tiny{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase}
+.music button{
+  background:transparent;
+  border:0;
+  color:var(--gold2);
+  font-size:.8rem;
+  cursor:pointer;
+}
 
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
-.reveal.visible{opacity:1;transform:none}
+.music small{
+  color:var(--muted);
+  font-size:.65rem;
+}
 
-/* FIX HIỂN THỊ KHOẢNG CÁCH CHỮ TIẾNG VIỆT */
+footer{
+  padding:75px 0 45px;
+  text-align:center;
+  color:var(--muted);
+}
+
+footer .signature{
+  font:2.2rem Georgia,serif;
+  color:var(--gold);
+  margin:13px 0;
+}
+
+footer .tiny{
+  font-size:.68rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:none;
+}
+
+/* Giữ khoảng cách ký tự bình thường cho nội dung */
 h1,h2,h3,p,em,strong,blockquote{
   word-spacing:normal;
   font-kerning:normal;
 }
-.hero h1,.section h2{
-  letter-spacing:normal;
-}
 
 @media(max-width:760px){
-.topbar{height:65px}
-.nav{gap:12px;font-size:.72rem}
-.nav a:nth-child(2){display:none}
-.hero{grid-template-columns:1fr;gap:34px;padding:60px 0}
-.hero h1{font-size:clamp(3.6rem,17vw,5.7rem);line-height:1.08}
-.portrait-wrap{justify-self:center;max-width:360px}
-.portrait-placeholder{min-height:360px}
-.side-note{right:-20px}
-.section{padding:72px 0}
-.about-grid{grid-template-columns:1fr;gap:15px}
-.big-number{font-size:5rem}
-.facts{grid-template-columns:1fr}
-.timeline{grid-template-columns:1fr}
-.step{min-height:0}
-.gallery{grid-template-columns:1fr}
-.photo,.photo.tall{min-height:280px}
-.music{right:10px;bottom:10px}
-.music small{display:none}
+  .topbar{height:65px}
+  .nav{gap:12px;font-size:.72rem}
+  .nav a:nth-child(2){display:none}
+  .hero{
+    grid-template-columns:1fr;
+    gap:34px;
+    padding:60px 0;
+  }
+  .hero h1{
+    font-size:clamp(3.6rem,17vw,5.7rem);
+    line-height:1.08;
+  }
+  .portrait-wrap{
+    justify-self:center;
+    max-width:360px;
+  }
+  .portrait-placeholder{min-height:360px}
+  .side-note{right:-20px}
+  .section{padding:72px 0}
+  .about-grid{
+    grid-template-columns:1fr;
+    gap:15px;
+  }
+  .big-number{font-size:5rem}
+  .facts{grid-template-columns:1fr}
+  .timeline{grid-template-columns:1fr}
+  .step{min-height:0}
+  .gallery{grid-template-columns:1fr}
+  .photo,.photo.tall{min-height:280px}
+  .music{right:10px;bottom:10px}
+  .music small{display:none}
 }
 
 @media(prefers-reduced-motion:reduce){
-html{scroll-behavior:auto}
-.reveal{opacity:1;transform:none;transition:none}
-*{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .reveal{
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+  *{
+    animation:none!important;
+    transition:none!important;
+  }
 }
-/* FIX LETTER SPACING */
-body {
-  letter-spacing: 0 !important;
-}
-
-h1, h2, h3, p, em, strong, span, a, div, blockquote {
-  letter-spacing: normal !important;
-  word-spacing: normal !important;
-}</style>
+</style>
 </head>
 
 <body>
@@ -159,7 +524,7 @@ h1, h2, h3, p, em, strong, span, a, div, blockquote {
   <div class="portrait-wrap reveal">
     <div class="portrait-frame">
       <div class="portrait-placeholder">
-        <img src="assets/portrait.jpg" alt="Đinh Quốc Duy">
+        <img src="images/portrait.jpg" alt="Đinh Quốc Duy">
       </div>
     </div>
     <div class="portrait-caption">
@@ -250,19 +615,19 @@ h1, h2, h3, p, em, strong, span, a, div, blockquote {
   <div class="gallery">
 
     <div class="photo tall reveal">
-      <img src="assets/graduate-01.jpg" alt="Ảnh tốt nghiệp chính">
+      <img src="images/graduate-01.jpg" alt="Ảnh tốt nghiệp chính">
       <span class="photo-label">A day to remember</span>
     </div>
 
     <div style="display:grid;gap:16px">
 
       <div class="photo reveal">
-        <img src="assets/memory-02.jpg" alt="Ảnh kỷ niệm 02">
+        <img src="images/memory-02.jpg" alt="Ảnh kỷ niệm 02">
         <span class="photo-label">The people</span>
       </div>
 
       <div class="photo reveal">
-        <img src="assets/memory-03.jpg" alt="Ảnh kỷ niệm 03">
+        <img src="images/memory-03.jpg" alt="Ảnh kỷ niệm 03">
         <span class="photo-label">The moments</span>
       </div>
 
@@ -294,9 +659,9 @@ h1, h2, h3, p, em, strong, span, a, div, blockquote {
 
 <div class="music">
   <button id="musicBtn" type="button">▶ BẬT NHẠC NỀN</button>
-  <small id="musicStatus">Thêm tệp assets/music.mp3</small>
+  <small id="musicStatus">Thêm tệp images/music.mp3</small>
   <audio id="bgMusic" loop preload="none">
-    <source src="assets/music.mp3" type="audio/mpeg">
+    <source src="images/music.mp3" type="audio/mpeg">
   </audio>
 </div>
 
@@ -322,7 +687,7 @@ btn.addEventListener('click', async()=>{
       status.textContent='Đang phát nhạc nền';
     }
     catch(e){
-      status.textContent='Hãy thêm assets/music.mp3 rồi tải lại trang';
+      status.textContent='Không tải được images/music.mp3';
     }
   }else{
     audio.pause();
