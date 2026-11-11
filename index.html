@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d16">
+<meta name="description" content="Đinh Quốc Duy — Graduation 2026, Công nghệ Kỹ thuật Hóa học, IUH.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Đinh Quốc Duy | Graduation 2026</title>
+<style>
+:root{--bg:#090d16;--panel:#111927;--panel2:#172235;--gold:#d8b77b;--gold-light:#f2dfb8;--white:#f5f1e9;--muted:#aeb8c7;--line:#ffffff20}
+*{box-sizing:border-box;letter-spacing:normal!important;word-spacing:normal!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:20px}
+body{margin:0;background:var(--bg);color:var(--white);font-family:"Be Vietnam Pro",Arial,Helvetica,sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 75% 10%,#29364b55,transparent 40%),radial-gradient(ellipse at 15% 65%,#8d6b3b18,transparent 35%)}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+.container{width:min(1120px,90%);margin-inline:auto}
+.topbar{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}
+.brand{color:var(--gold);font-size:.78rem;font-weight:800;white-space:nowrap}
+.nav{display:flex;flex-wrap:wrap;gap:22px;color:var(--muted);font-size:.84rem}
+.nav a:hover{color:var(--gold-light)}
+.hero{position:relative;isolation:isolate;min-height:calc(100vh - 78px);display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center;padding:65px 0 85px}
+.kicker,.eyebrow{color:var(--gold);font-size:.75rem;font-weight:700;letter-spacing:.08em!important}
+.personal-greeting{margin:0 0 12px;color:var(--gold-light);font-size:1.05rem;font-weight:600}
+.hero h1{margin:24px 0 20px;color:#fff;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(4rem,9vw,7.4rem);font-weight:500;line-height:.98;letter-spacing:-.035em!important;overflow-wrap:break-word;text-shadow:0 5px 32px #0008}
+.hero h1 em{color:#fff;font-style:normal}.section h2,.invitation h3,.wish blockquote,.signature{font-family:"Cormorant Garamond",Georgia,serif}.section h2 em{color:var(--gold);font-style:normal}
+.hero .sub{color:#d7d4cc;font-size:1.3rem}
+.intro{max-width:570px;color:var(--muted);font-size:1rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:13px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 19px;border:1px solid #d8b77b88;border-radius:3px;font-size:.82rem;transition:transform .25s,box-shadow .25s}
+.btn.primary{background:var(--gold);color:#17130d;border-color:var(--gold);font-weight:800}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px #0006}
+.portrait-wrap{position:relative;max-width:430px;width:100%;justify-self:end}
+.portrait-frame{aspect-ratio:4/5;border:1px solid #d8b77b77;padding:12px;background:linear-gradient(145deg,#35445a,#111927 55%,#6c5334)}
+.portrait-placeholder{width:100%;height:100%;min-height:390px;position:relative;overflow:hidden;background:linear-gradient(160deg,#26364b,#111827 62%,#4a3b2b)}
+.portrait-placeholder img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center}
+.portrait-caption{display:flex;justify-content:space-between;gap:12px;padding:13px 2px;color:var(--muted);font-size:.72rem}
+.side-note{position:absolute;right:-35px;bottom:80px;writing-mode:vertical-rl;color:#d8b77b99;font-size:.68rem}
+.section{padding:100px 0;border-top:1px solid var(--line);scroll-margin-top:15px}
+.section-head{max-width:720px;margin-bottom:38px}
+.section h2{margin:15px 0;font-size:clamp(2.6rem,5.5vw,4.5rem);font-weight:500;line-height:1.08;overflow-wrap:break-word}
+.section-lead{max-width:700px;color:var(--muted)}
+/* Invitation */
+.invitation{position:relative;max-width:900px;margin:0 auto;padding:clamp(28px,6vw,64px);text-align:center;border:1px solid #d8b77b88;background:linear-gradient(145deg,#182337ee,#0d121dee),var(--panel);box-shadow:0 22px 65px #0005}
+.invitation::before{content:"";position:absolute;inset:12px;border:1px solid #d8b77b44;pointer-events:none}
+.invitation>*{position:relative}
+.invitation-kicker{color:var(--gold);font-size:.76rem;font-weight:700;letter-spacing:.08em!important}
+.invitation h3{margin:16px 0 10px;color:var(--gold-light);font-size:clamp(2.6rem,6vw,4.2rem);font-weight:500;line-height:1.05}
+.invitation-intro{margin:0 0 28px;color:var(--white);font-size:1.15rem}
+.invitation-date{margin:0;color:var(--gold-light);font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.25}
+.invitation-time{margin:8px 0 28px;color:var(--white);font-size:1.1rem}
+.invitation-divider{width:70px;height:1px;margin:25px auto;background:var(--gold)}
+.invitation-label{margin:0 0 8px;color:var(--gold);font-size:.76rem;font-weight:700}
+.invitation-venue{margin:0 auto;max-width:680px;color:var(--white);font-size:1.12rem;line-height:1.7}
+.invitation-address{margin:18px auto 0;max-width:650px;color:var(--muted);font-size:.96rem;line-height:1.7}
+.contact-line{margin:22px 0 0;color:var(--muted);font-size:.95rem}
+.contact-line a{color:var(--gold-light);text-decoration:underline;text-underline-offset:4px}
+/* Journey */
+.about-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:60px;align-items:start}
+.big-number{color:#d8b77b33;font-size:clamp(5rem,12vw,9rem);line-height:1}
+.about-copy{color:#e5e0d6;font-size:1.2rem;line-height:1.8}
+.about-copy p{margin-top:0}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}
+.fact{padding:19px;background:linear-gradient(145deg,#182337,#101725);border:1px solid var(--line)}
+.fact small{display:block;color:var(--gold);font-size:.72rem}
+.fact strong{display:block;margin-top:8px;font-size:1rem;font-weight:600}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}
+.step{min-height:205px;padding:25px 22px;border:1px solid var(--line);background:linear-gradient(145deg,#172235,#101622)}
+.step .n{color:var(--gold);font-size:2.3rem}
+.step h3{margin:12px 0 7px;font-size:1.3rem;font-weight:400}
+.step p{margin:0;color:var(--muted);font-size:.92rem}
+/* Vertical cinematic film reel for personal photos */
+.gallery-shell{position:relative;max-width:900px;margin:0 auto}
+.gallery-reel{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;gap:42px;padding:35px 64px;overflow:visible}
+.gallery-reel::before,.gallery-reel::after{content:"";position:absolute;z-index:2;top:0;bottom:0;width:24px;background:repeating-linear-gradient(to bottom,transparent 0 13px,#d8b77b 13px 28px,transparent 28px 43px);opacity:.78;pointer-events:none}
+.gallery-reel::before{left:10px}.gallery-reel::after{right:10px}
+.film-frame{position:relative;width:min(70%,610px);aspect-ratio:4/3;padding:13px;background:linear-gradient(135deg,#252b32,#080b11 55%,#6d5736);border:1px solid #d8b77b88;box-shadow:0 18px 45px #0007;transform:scale(.78);opacity:.58;filter:saturate(.72);transition:transform .65s cubic-bezier(.2,.75,.25,1),opacity .65s ease,filter .65s ease,box-shadow .65s ease;will-change:transform}
+.film-frame:nth-child(even){margin-left:8%}.film-frame:nth-child(odd){margin-right:8%}
+.film-frame::before,.film-frame::after{content:"";position:absolute;z-index:3;left:0;right:0;height:7px;background:repeating-linear-gradient(to right,#090d16 0 12px,transparent 12px 22px)}
+.film-frame::before{top:2px}.film-frame::after{bottom:2px}
+.film-frame img{width:100%;height:100%;object-fit:cover;object-position:center;background:linear-gradient(145deg,#26364b,#101725)}
+.film-frame.is-active{transform:scale(1.08);opacity:1;filter:saturate(1.04);box-shadow:0 25px 70px #000b,0 0 28px #d8b77b25;z-index:4}
+.film-caption{position:absolute;z-index:4;left:22px;right:22px;bottom:19px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff;font-size:.72rem;letter-spacing:.1em!important;text-shadow:0 2px 8px #000}
+.film-caption span:last-child{color:var(--gold-light);font-variant-numeric:tabular-nums}
+.gallery-controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;color:var(--muted);font-size:.8rem;text-align:center}
+.gallery-counter{color:var(--gold-light);font-variant-numeric:tabular-nums;white-space:nowrap}
+@media(max-width:760px){
+ .gallery-reel{gap:28px;padding:25px 35px}
+ .gallery-reel::before,.gallery-reel::after{width:15px;background:repeating-linear-gradient(to bottom,transparent 0 10px,#d8b77b 10px 22px,transparent 22px 34px)}
+ .gallery-reel::before{left:3px}.gallery-reel::after{right:3px}
+ .film-frame{width:88%;padding:9px;transform:scale(.78)}
+ .film-frame:nth-child(even){margin-left:5%}.film-frame:nth-child(odd){margin-right:5%}
+ .film-frame.is-active{transform:scale(1.06)}
+ .film-caption{left:15px;right:15px;bottom:13px;font-size:.62rem}
+}
+/* Note */
+.wish{padding:clamp(28px,6vw,65px);text-align:center;border:1px solid #d8b77b55;background:linear-gradient(120deg,#151f30,#0d121d)}
+.wish blockquote{max-width:850px;margin:0 auto 22px;color:var(--gold-light);font-size:clamp(1.35rem,3vw,2.2rem);line-height:1.55}
+.wish p{margin:0;color:var(--muted)}
+.music{position:fixed;right:20px;bottom:20px;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid #d8b77b77;background:#111927ed;box-shadow:0 8px 30px #0008}
+.music button{padding:4px;border:0;background:transparent;color:var(--gold-light);font-family:Arial,Helvetica,sans-serif;font-size:.82rem;cursor:pointer}
+.music small{color:var(--muted);font-size:.68rem}
+footer{padding:75px 0 45px;text-align:center;color:var(--muted)}
+footer .signature{margin:13px 0;color:var(--gold);font-size:2rem}
+footer .tiny{font-size:.76rem}
+
+/* CSS-only chemistry atmosphere: no canvas or JavaScript required */
+.chemistry-atmosphere{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.78}
+.hero>.reveal,.hero>.portrait-wrap{position:relative;z-index:1}
+.molecule{position:absolute;width:clamp(86px,12vw,150px);height:auto;overflow:visible;filter:drop-shadow(0 0 9px #69c7d522);animation:moleculeDrift 18s ease-in-out infinite}
+.molecule svg{display:block;width:100%;height:auto;overflow:visible}
+.molecule .bond{stroke:#83c7d5;stroke-width:1.25;stroke-opacity:.68;fill:none}
+.molecule .atom{fill:#d8b77b;stroke:#f2dfb8;stroke-width:.8;fill-opacity:.82}
+.molecule .atom-cool{fill:#6fc5d4;stroke:#c5f2f7;stroke-width:.8;fill-opacity:.78}
+.molecule.molecule-one{top:8%;right:6%;animation-duration:21s}
+.molecule.molecule-two{right:28%;bottom:9%;width:clamp(70px,9vw,112px);animation-duration:24s;animation-delay:-7s;opacity:.62}
+.molecule.molecule-three{left:2%;top:24%;width:clamp(64px,8vw,100px);animation-duration:19s;animation-delay:-11s;opacity:.55}
+@keyframes moleculeDrift{0%,100%{transform:translate3d(0,0,0) rotate(-4deg)}50%{transform:translate3d(8px,-13px,0) rotate(5deg)}}
+/* Four varied chemistry animations on every page */
+.section{position:relative;isolation:isolate;overflow:hidden}
+.section>.chemistry-atmosphere{z-index:0;opacity:.62}
+.section>.container{position:relative;z-index:1}
+.chemistry-atmosphere .chem-item{position:absolute;pointer-events:none}
+.chem-orbit{width:76px;height:76px;right:8%;top:17%;border:1px solid #70c6d477;border-radius:50%;animation:orbitSpin 13s linear infinite}
+.chem-orbit:before,.chem-orbit:after{content:"";position:absolute;border:1px solid #d8b77b88;border-radius:50%;inset:13px -8px;transform:rotate(58deg)}
+.chem-orbit:after{inset:-8px 13px;transform:rotate(-48deg)}
+.chem-orbit i{position:absolute;width:7px;height:7px;left:9px;top:10px;border-radius:50%;background:#d8b77b;box-shadow:0 0 12px #d8b77b}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+.chem-bubbles{left:10%;bottom:8%;width:70px;height:130px}
+.chem-bubbles i{position:absolute;bottom:0;left:var(--x);width:var(--s);height:var(--s);border:1px solid #75c9d988;border-radius:50%;background:radial-gradient(circle at 30% 25%,#d9fbff55,transparent 55%);animation:bubbleRise var(--t) ease-in infinite;animation-delay:var(--d)}
+@keyframes bubbleRise{0%{transform:translateY(0) scale(.7);opacity:0}15%{opacity:.8}85%{opacity:.55}100%{transform:translateY(-125px) translateX(12px) scale(1.1);opacity:0}}
+.chem-sparks{right:23%;bottom:12%;width:90px;height:90px}
+.chem-sparks i{position:absolute;left:50%;top:50%;width:4px;height:4px;border-radius:50%;background:#f2dfb8;box-shadow:0 0 8px #f2dfb8;animation:sparkPulse 2.8s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes sparkPulse{0%,100%{transform:translate(0,0) scale(.4);opacity:.1}50%{transform:translate(var(--dx),var(--dy)) scale(1.6);opacity:.95}}
+.chem-network{left:42%;top:9%;width:82px;height:66px;opacity:.65;animation:networkFloat 16s ease-in-out infinite}
+.chem-network svg{width:100%;height:100%;overflow:visible}
+.chem-network path{fill:none;stroke:#80cbd8;stroke-width:1.2;stroke-dasharray:3 4;animation:bondFlow 7s linear infinite}
+.chem-network circle{fill:#d8b77b;filter:drop-shadow(0 0 3px #d8b77b)}
+@keyframes bondFlow{to{stroke-dashoffset:-28}}
+@keyframes networkFloat{50%{transform:translate(10px,-12px) rotate(8deg)}}
+@media(max-width:760px){.section>.chemistry-atmosphere{opacity:.38}.chem-orbit{right:3%;top:10%}.chem-bubbles{left:2%}.chem-sparks{right:7%}.chem-network{left:38%;top:5%}}
+.hero::after{content:"";position:absolute;inset:5% -8% 8%;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 72% 42%,#1b7d9950,transparent 34%),radial-gradient(ellipse at 20% 45%,#d8b77b12,transparent 42%);filter:blur(12px)}
+.hero .kicker,.eyebrow,.invitation-kicker,.invitation-label{letter-spacing:.12em!important}
+.hero .sub{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.8rem;letter-spacing:.04em!important}
+.brand,.nav,.btn,.portrait-caption,.side-note,.gallery-caption,.gallery-placeholder,.music button,.invitation-kicker,.invitation-label{letter-spacing:.045em!important}
+
+/* Live graduation countdown */
+.countdown-wrap{margin:34px auto 4px;max-width:660px;padding:26px 18px 20px;border-top:1px solid #d8b77b55;border-bottom:1px solid #d8b77b55}
+.countdown-heading{margin:0 0 5px;color:var(--gold-light);font-size:.72rem;font-weight:700;letter-spacing:.16em!important}
+.countdown-sub{margin:0 0 12px;color:var(--muted);font-size:.82rem}
+.hourglass{position:relative;width:132px;height:190px;margin:0 auto 14px;filter:drop-shadow(0 9px 18px #d8b77b2b)}
+.hourglass-svg{display:block;width:100%;height:100%;overflow:visible}
+.hourglass-glass-shape{fill:url(#glassTint);stroke:#e9d6b1d9;stroke-width:2.1;stroke-linejoin:round}
+.hourglass-highlight{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;opacity:.48}
+.hourglass-frame{fill:url(#frameMetal);stroke:#8e714b;stroke-width:1}
+.sand-top{fill:url(#sandGold);clip-path:url(#topChamber)}
+.sand-bottom{fill:url(#sandGold);clip-path:url(#bottomChamber)}
+.sand-stream-line{fill:none;stroke:#f2dfb8;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:4 5;filter:drop-shadow(0 0 3px #f2dfb8);animation:sandFall .75s linear infinite}
+.sand-grain{fill:#f2dfb8;filter:drop-shadow(0 0 2px #f2dfb8);animation:grainFall .9s linear infinite}
+@keyframes sandFall{to{stroke-dashoffset:-18}}
+@keyframes grainFall{0%{opacity:0;transform:translateY(-5px)}35%{opacity:1}100%{opacity:0;transform:translateY(7px)}}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:480px;margin:0 auto}
+.countdown-unit{padding:10px 5px;background:#ffffff08;border:1px solid #ffffff16}
+.countdown-number{display:block;color:#fff;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.8rem,5vw,2.6rem);line-height:1;font-variant-numeric:tabular-nums}
+.countdown-unit small{display:block;margin-top:6px;color:var(--muted);font-size:.62rem;letter-spacing:.12em!important}
+.countdown-finished{color:var(--gold-light);font-family:"Cormorant Garamond",Georgia,serif;font-size:1.45rem}
+@media(max-width:760px){
+ .hero::after{inset:0}
+ .chemistry-atmosphere{opacity:.58}
+ .molecule.molecule-one{right:0;top:8%}
+ .molecule.molecule-two{right:8%;bottom:5%}
+ .molecule.molecule-three{left:0;top:28%}
+ .countdown-wrap{padding:22px 8px 16px;margin-top:28px}
+ .hourglass{width:112px;height:162px}
+ 
+ .countdown{gap:6px}
+ .countdown-unit{padding:9px 2px}
+ .countdown-unit small{font-size:.55rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .sand-stream-line{animation:none}
+  .molecule,.chem-orbit,.chem-bubbles i,.chem-sparks i,.chem-network,.chem-network path{animation:none!important}
+}
+
+/* Admin link generator */
+.admin-generator{position:fixed;z-index:30;left:16px;bottom:16px;width:min(440px,calc(100% - 32px));max-height:75vh;overflow-y:auto;padding:20px;color:var(--white);background:#111927;border:1px solid #d8b77b88;box-shadow:0 12px 40px #0009}
+.admin-generator[hidden]{display:none}
+.admin-generator h3{margin:0 0 12px;color:var(--gold-light);font-size:1rem}
+.admin-generator small{color:var(--muted)}
+.admin-generator textarea{display:block;width:100%;min-height:110px;margin:10px 0;padding:12px;color:var(--white);background:#090d16;border:1px solid #ffffff30;font:inherit;font-size:14px;resize:vertical}
+.admin-generator button{padding:10px 14px;margin:4px 4px 4px 0;color:#17130d;background:var(--gold);border:0;cursor:pointer;font:inherit;font-size:.78rem;font-weight:700}
+.admin-generator .admin-close{float:right;color:var(--white);background:transparent;border:1px solid #ffffff44}
+.reveal{opacity:1;transform:none}
+.js-ready .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.js-ready .reveal.visible{opacity:1;transform:none}
+@media(max-width:760px){
+ .topbar{min-height:65px;align-items:flex-start;flex-direction:column;justify-content:center;padding:12px 0}
+ .nav{gap:13px;font-size:.69rem}
+ .hero{min-height:auto;grid-template-columns:1fr;gap:34px;padding:60px 0}
+ .hero h1{font-size:clamp(3.2rem,16vw,5.2rem)}
+ .portrait-wrap{justify-self:center;max-width:360px}
+ .portrait-placeholder{min-height:340px}
+ .side-note{right:-20px}
+ .section{padding:72px 0}
+ .about-grid{grid-template-columns:1fr;gap:15px}
+ .big-number{font-size:5rem}
+ .facts,.timeline{grid-template-columns:1fr}
+ .step{min-height:0}
+ .invitation{padding:38px 24px}
+ .invitation-venue{font-size:1rem}
+ .music{right:10px;bottom:10px}
+ .music small{display:none}
+ .admin-generator{left:10px;bottom:70px;width:calc(100% - 20px);max-height:65vh}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ .reveal,.js-ready .reveal{opacity:1;transform:none;transition:none}
+ *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<header class="container topbar">
+ <a class="brand" href="#">D.Q.DUY / GRADUATION 2026</a>
+ <nav class="nav" aria-label="Điều hướng chính">
+  <a href="#invitation">01 · INVITATION</a>
+  <a href="#gallery">02 · ABOUT ME</a>
+  <a href="#journey">03 · JOURNEY</a>
+  <a href="#message">04 · NOTE</a>
+ </nav>
+</header>
+<main>
+ <!-- TRANG BÌA: giữ nguyên ảnh, tên và nội dung nhận diện -->
+ <section class="container hero" id="home">
+  <div class="chemistry-atmosphere" aria-hidden="true">
+   <div class="molecule molecule-one">
+    <svg viewBox="0 0 140 120" role="presentation">
+     <g class="bond"><path d="M70 18 L98 34 L98 66 L70 82 L42 66 L42 34 Z M70 18 L70 4 M98 34 L119 22 M98 66 L119 78 M70 82 L70 106 M42 66 L20 78 M42 34 L20 22 M62 27 L86 40 L86 60 L70 69 L54 60 L54 40 Z"/></g>
+     <circle class="atom-cool" cx="70" cy="18" r="4.5"/><circle class="atom" cx="98" cy="34" r="4"/>
+     <circle class="atom-cool" cx="98" cy="66" r="4.5"/><circle class="atom" cx="70" cy="82" r="4"/>
+     <circle class="atom-cool" cx="42" cy="66" r="4.5"/><circle class="atom" cx="42" cy="34" r="4"/>
+     <circle class="atom" cx="70" cy="4" r="3.2"/><circle class="atom-cool" cx="119" cy="22" r="3.6"/>
+     <circle class="atom" cx="119" cy="78" r="3.2"/><circle class="atom-cool" cx="70" cy="106" r="3.5"/>
+     <circle class="atom" cx="20" cy="78" r="3.2"/><circle class="atom-cool" cx="20" cy="22" r="3.6"/>
+    </svg>
+   </div>
+   <div class="molecule molecule-two">
+    <svg viewBox="0 0 120 100" role="presentation">
+     <g class="bond"><path d="M25 26 L55 16 L82 34 L76 66 L45 78 L20 57 Z M82 34 L104 21 M76 66 L98 82 M45 78 L42 96"/></g>
+     <circle class="atom-cool" cx="25" cy="26" r="4"/><circle class="atom" cx="55" cy="16" r="3.5"/>
+     <circle class="atom-cool" cx="82" cy="34" r="4"/><circle class="atom" cx="76" cy="66" r="3.5"/>
+     <circle class="atom-cool" cx="45" cy="78" r="4"/><circle class="atom" cx="20" cy="57" r="3.5"/>
+     <circle class="atom" cx="104" cy="21" r="3"/><circle class="atom-cool" cx="98" cy="82" r="3.4"/><circle class="atom" cx="42" cy="96" r="3"/>
+    </svg>
+   </div>
+   <div class="molecule molecule-three">
+    <svg viewBox="0 0 100 90" role="presentation">
+     <g class="bond"><path d="M22 20 L50 10 L76 28 L70 58 L42 70 L17 51 Z M50 10 L55 0 M76 28 L95 20 M70 58 L88 72"/></g>
+     <circle class="atom" cx="22" cy="20" r="3.5"/><circle class="atom-cool" cx="50" cy="10" r="4"/>
+     <circle class="atom" cx="76" cy="28" r="3.5"/><circle class="atom-cool" cx="70" cy="58" r="4"/>
+     <circle class="atom" cx="42" cy="70" r="3.5"/><circle class="atom-cool" cx="17" cy="51" r="3.5"/>
+     <circle class="atom" cx="55" cy="0" r="2.8"/><circle class="atom-cool" cx="95" cy="20" r="3"/><circle class="atom" cx="88" cy="72" r="3"/>
+    </svg>
+   </div>
+   <div class="chem-item chem-orbit"><i></i></div>
+   <div class="chem-item chem-bubbles"><i style="--x:4px;--s:9px;--t:5.8s;--d:-1s"></i><i style="--x:30px;--s:6px;--t:7s;--d:-3s"></i><i style="--x:52px;--s:12px;--t:6.4s;--d:-4.5s"></i></div>
+   <div class="chem-item chem-sparks"><i style="--dx:-22px;--dy:-18px;--d:-.2s"></i><i style="--dx:19px;--dy:-24px;--d:-1s"></i><i style="--dx:28px;--dy:17px;--d:-1.7s"></i><i style="--dx:-17px;--dy:25px;--d:-2.2s"></i><i style="--dx:2px;--dy:-34px;--d:-.7s"></i></div>
+   <div class="chem-item chem-network"><svg viewBox="0 0 90 70"><path d="M12 35 35 12 61 24 76 52 45 61 12 35M35 12 45 61M61 24 12 35"/><circle cx="12" cy="35" r="4"/><circle cx="35" cy="12" r="4"/><circle cx="61" cy="24" r="4"/><circle cx="76" cy="52" r="4"/><circle cx="45" cy="61" r="4"/></svg></div>
+  </div>
+  <div class="reveal">
+   <p id="personalGreeting" class="personal-greeting"></p>
+   <div class="kicker">A chapter ends · A new one begins</div>
+   <h1>Đinh Quốc<br><em>Duy.</em></h1>
+   <p class="sub">Graduation · 2026</p>
+   <p class="intro">Khép lại một hành trình bằng lòng biết ơn. Mở ra chặng đường mới với những trải nghiệm, thử thách và ước mơ đang chờ phía trước.</p>
+   <div class="hero-actions">
+    <a class="btn primary" href="#invitation">Xem thư mời</a>
+    <a class="btn" href="#journey">Khám phá hành trình</a>
+   </div>
+  </div>
+  <div class="portrait-wrap reveal">
+   <div class="portrait-frame"><div class="portrait-placeholder"><img src="images/portrait.jpg" alt="Chân dung Đinh Quốc Duy"></div></div>
+   <div class="portrait-caption"><span>CLASS OF 2026</span><span>01 — 04</span></div>
+   <div class="side-note">A MOMENT TO REMEMBER</div>
+  </div>
+ </section>
+
+ <!-- 01 / THE INVITATION -->
+ <section class="section" id="invitation">
+  <div class="chemistry-atmosphere" aria-hidden="true">
+   <div class="chem-item chem-orbit"><i></i></div>
+   <div class="chem-item chem-bubbles"><i style="--x:4px;--s:9px;--t:5.8s;--d:-1s"></i><i style="--x:30px;--s:6px;--t:7s;--d:-3s"></i><i style="--x:52px;--s:12px;--t:6.4s;--d:-4.5s"></i></div>
+   <div class="chem-item chem-sparks"><i style="--dx:-22px;--dy:-18px;--d:-.2s"></i><i style="--dx:19px;--dy:-24px;--d:-1s"></i><i style="--dx:28px;--dy:17px;--d:-1.7s"></i><i style="--dx:-17px;--dy:25px;--d:-2.2s"></i><i style="--dx:2px;--dy:-34px;--d:-.7s"></i></div>
+   <div class="chem-item chem-network"><svg viewBox="0 0 90 70"><path d="M12 35 35 12 61 24 76 52 45 61 12 35M35 12 45 61M61 24 12 35"/><circle cx="12" cy="35" r="4"/><circle cx="35" cy="12" r="4"/><circle cx="61" cy="24" r="4"/><circle cx="76" cy="52" r="4"/><circle cx="45" cy="61" r="4"/></svg></div>
+  </div>
+  <div class="container">
+   <div class="section-head reveal">
+    <div class="eyebrow">01 / THE INVITATION</div>
+    <h2>Một lời mời<br><em>cho ngày đặc biệt.</em></h2>
+    <p class="section-lead">Sự hiện diện của Bạn sẽ làm cho cột mốc này trở nên trọn vẹn và đáng nhớ hơn.</p>
+   </div>
+   <div class="invitation reveal">
+    <div class="invitation-kicker">GRADUATION CEREMONY · 2026</div>
+    <h3 id="invitationRecipient">Thân mời Bạn</h3>
+    <p class="invitation-intro">Đến chung vui trong ngày tốt nghiệp của mình.</p>
+
+     <div class="countdown-wrap" aria-label="Đếm ngược đến lễ tốt nghiệp">
+      <p class="countdown-heading">THE MOMENT IS GETTING CLOSER</p>
+      <p class="countdown-sub">Thời gian còn lại đến khoảnh khắc tốt nghiệp</p>
+      <div class="hourglass" aria-hidden="true">
+       <svg class="hourglass-svg" viewBox="0 0 160 230" role="presentation" focusable="false">
+        <defs>
+         <linearGradient id="glassTint" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#d9e9ee" stop-opacity=".07"/>
+          <stop offset=".24" stop-color="#ffffff" stop-opacity=".2"/>
+          <stop offset=".52" stop-color="#d6edf2" stop-opacity=".04"/>
+          <stop offset=".78" stop-color="#ffffff" stop-opacity=".17"/>
+          <stop offset="1" stop-color="#c7e4eb" stop-opacity=".06"/>
+         </linearGradient>
+         <linearGradient id="frameMetal" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f3dfb5"/><stop offset=".45" stop-color="#a78049"/><stop offset="1" stop-color="#ead3a3"/>
+         </linearGradient>
+         <linearGradient id="sandGold" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fff0c9"/><stop offset=".42" stop-color="#e6bf79"/><stop offset="1" stop-color="#b78039"/>
+         </linearGradient>
+         <clipPath id="topChamber"><path d="M32 21 Q80 3 128 21 L85 104 Q80 111 75 104 Z"/></clipPath>
+         <clipPath id="bottomChamber"><path d="M75 119 Q80 112 85 119 L128 207 Q80 225 32 207 Z"/></clipPath>
+        </defs>
+        <rect class="hourglass-frame" x="20" y="8" width="120" height="9" rx="3"/>
+        <rect class="hourglass-frame" x="20" y="213" width="120" height="9" rx="3"/>
+        <path class="hourglass-glass-shape" d="M28 17 Q80 -1 132 17 L87 104 Q80 112 87 120 L132 213 Q80 231 28 213 L73 120 Q80 112 73 104 Z"/>
+        <path id="sandTop" class="sand-top" d="M38 25 Q80 11 122 25 L82 98 L78 98 Z"/>
+        <path id="sandBottom" class="sand-bottom" d="M38 205 Q80 218 122 205 L85 199 Q80 197 75 199 Z"/>
+        <g id="sandStream">
+         <path class="sand-stream-line" d="M80 105 L80 125"/>
+         <circle class="sand-grain" cx="80" cy="110" r="1.6"/>
+         <circle class="sand-grain" cx="80" cy="118" r="1.2" style="animation-delay:-.45s"/>
+        </g>
+        <path class="hourglass-highlight" d="M39 23 Q77 10 91 18 M42 31 L74 91 M41 199 Q45 209 57 211"/>
+        <path class="hourglass-highlight" d="M120 31 L89 91 M118 198 Q113 207 103 210" style="opacity:.24"/>
+       </svg>
+      </div>
+      <div class="countdown" id="countdown">
+       <div class="countdown-unit"><span class="countdown-number" id="days">00</span><small>DAYS</small></div>
+       <div class="countdown-unit"><span class="countdown-number" id="hours">00</span><small>HOURS</small></div>
+       <div class="countdown-unit"><span class="countdown-number" id="minutes">00</span><small>MINUTES</small></div>
+       <div class="countdown-unit"><span class="countdown-number" id="seconds">00</span><small>SECONDS</small></div>
+      </div>
+      <div id="countdownFinished" class="countdown-finished" hidden>THE MOMENT HAS ARRIVED</div>
+     </div>
+    <p class="invitation-date">Thứ Hai<br>23/11/2026</p>
+    <p class="invitation-time">Vào lúc 16:00 · Buổi chiều</p>
+    <div class="invitation-divider"></div>
+    <p class="invitation-label">ĐỊA ĐIỂM TỔ CHỨC</p>
+    <p class="invitation-venue">Sảnh nhà F<br>Khoa Công nghệ Kỹ thuật Hóa học<br>Trường Đại học Công nghiệp Thành phố Hồ Chí Minh</p>
+    <p class="invitation-address">Số 12, Nguyễn Văn Bảo, Phường Hạnh Thông, TP.HCM.</p>
+    <p class="contact-line">Số điện thoại liên hệ: <a href="tel:0384537674">0384 537 674</a></p>
+   </div>
+  </div>
+ </section>
+
+ <!-- 02 / A GLIMPSE OF ME: vertical cinematic film reel -->
+ <section class="section" id="gallery">
+  <div class="chemistry-atmosphere" aria-hidden="true">
+   <div class="chem-item chem-orbit"><i></i></div>
+   <div class="chem-item chem-bubbles"><i style="--x:4px;--s:9px;--t:5.8s;--d:-1s"></i><i style="--x:30px;--s:6px;--t:7s;--d:-3s"></i><i style="--x:52px;--s:12px;--t:6.4s;--d:-4.5s"></i></div>
+   <div class="chem-item chem-sparks"><i style="--dx:-22px;--dy:-18px;--d:-.2s"></i><i style="--dx:19px;--dy:-24px;--d:-1s"></i><i style="--dx:28px;--dy:17px;--d:-1.7s"></i><i style="--dx:-17px;--dy:25px;--d:-2.2s"></i><i style="--dx:2px;--dy:-34px;--d:-.7s"></i></div>
+   <div class="chem-item chem-network"><svg viewBox="0 0 90 70"><path d="M12 35 35 12 61 24 76 52 45 61 12 35M35 12 45 61M61 24 12 35"/><circle cx="12" cy="35" r="4"/><circle cx="35" cy="12" r="4"/><circle cx="61" cy="24" r="4"/><circle cx="76" cy="52" r="4"/><circle cx="45" cy="61" r="4"/></svg></div>
+  </div>
+  <div class="container">
+   <div class="section-head reveal">
+    <div class="eyebrow">02 / A GLIMPSE OF ME</div>
+    <h2>Một vài góc nhìn<br><em>về tôi hôm nay.</em></h2>
+    <p class="section-lead">Một vài hình ảnh về bản thân ở hiện tại — những khoảnh khắc đời thường, phong cách và dấu ấn cá nhân.</p>
+   </div>
+   <div class="gallery-shell reveal">
+    <div class="gallery-reel" id="galleryReel" aria-label="Cuộn phim trình chiếu 10 hình ảnh cá nhân">
+     <article class="film-frame"><img src="images/graduate-01.jpg" alt="Ảnh cá nhân 1" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>01 — PORTRAIT</span><span>01 / 10</span></div></article>
+     <article class="film-frame"><img src="images/memory-02.jpg" alt="Ảnh cá nhân 2" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>02 — MOMENT</span><span>02 / 10</span></div></article>
+     <article class="film-frame"><img src="images/memory-03.jpg" alt="Ảnh cá nhân 3" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>03 — MY STYLE</span><span>03 / 10</span></div></article>
+     <article class="film-frame"><img src="images/personal-04.jpg" alt="Ảnh cá nhân 4" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>04 — EVERYDAY</span><span>04 / 10</span></div></article>
+     <article class="film-frame"><img src="images/personal-05.jpg" alt="Ảnh cá nhân 5" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>05 — A GLIMPSE</span><span>05 / 10</span></div></article>
+     <article class="film-frame"><img src="images/personal-06.jpg" alt="Ảnh cá nhân 6" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>06 — THE DETAILS</span><span>06 / 10</span></div></article>
+     <article class="film-frame"><img src="images/personal-07.jpg" alt="Ảnh cá nhân 7" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>07 — IN BETWEEN</span><span>07 / 10</span></div></article>
+     <article class="film-frame"><img src="images/personal-08.jpg" alt="Ảnh cá nhân 8" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>08 — A MOMENT</span><span>08 / 10</span></div></article>
+     <article class="film-frame"><img src="images/personal-09.jpg" alt="Ảnh cá nhân 9" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>09 — MY WORLD</span><span>09 / 10</span></div></article>
+     <article class="film-frame"><img src="images/personal-10.jpg" alt="Ảnh cá nhân 10" loading="lazy" onerror="this.style.display='none'"><div class="film-caption"><span>10 — THE NEXT CHAPTER</span><span>10 / 10</span></div></article>
+    </div>
+    <div class="gallery-controls"><span>Cuộn trang xuống để xem cuộn phim chạy dọc</span><span class="gallery-counter" id="galleryCounter">01 / 10</span></div>
+   </div>
+  </div>
+ </section>
+
+ <!-- 03 / THE JOURNEY -->
+ <section class="section" id="journey">
+  <div class="chemistry-atmosphere" aria-hidden="true">
+   <div class="chem-item chem-orbit"><i></i></div>
+   <div class="chem-item chem-bubbles"><i style="--x:4px;--s:9px;--t:5.8s;--d:-1s"></i><i style="--x:30px;--s:6px;--t:7s;--d:-3s"></i><i style="--x:52px;--s:12px;--t:6.4s;--d:-4.5s"></i></div>
+   <div class="chem-item chem-sparks"><i style="--dx:-22px;--dy:-18px;--d:-.2s"></i><i style="--dx:19px;--dy:-24px;--d:-1s"></i><i style="--dx:28px;--dy:17px;--d:-1.7s"></i><i style="--dx:-17px;--dy:25px;--d:-2.2s"></i><i style="--dx:2px;--dy:-34px;--d:-.7s"></i></div>
+   <div class="chem-item chem-network"><svg viewBox="0 0 90 70"><path d="M12 35 35 12 61 24 76 52 45 61 12 35M35 12 45 61M61 24 12 35"/><circle cx="12" cy="35" r="4"/><circle cx="35" cy="12" r="4"/><circle cx="61" cy="24" r="4"/><circle cx="76" cy="52" r="4"/><circle cx="45" cy="61" r="4"/></svg></div>
+  </div>
+  <div class="container">
+   <div class="section-head reveal">
+    <div class="eyebrow">03 / THE JOURNEY</div>
+    <h2>Những chặng đường<br><em>đã đi qua.</em></h2>
+    <p class="section-lead">Ba lát cắt tượng trưng cho hành trình đại học. Mỗi trải nghiệm đều góp phần tạo nên phiên bản trưởng thành hơn của ngày hôm nay.</p>
+   </div>
+   <div class="about-grid reveal">
+    <div class="big-number">2026</div>
+    <div class="about-copy">
+     <p>“Mỗi chặng đường đều để lại một điều đáng nhớ. Có những điều mình học được từ giảng đường, và cũng có những điều chỉ thời gian cùng trải nghiệm mới có thể dạy mình.”</p>
+     <p style="font-size:.92rem;color:var(--muted)">Đây là không gian lưu giữ một cột mốc quan trọng — với sự trân trọng dành cho quá khứ và niềm tin vào những điều phía trước.</p>
+    </div>
+   </div>
+   <div class="facts reveal">
+    <div class="fact"><small>Trường đại học</small><strong>Trường Đại học Công nghiệp Thành phố Hồ Chí Minh</strong></div>
+    <div class="fact"><small>Ngành học</small><strong>Công nghệ Kỹ thuật Hóa học</strong></div>
+    <div class="fact"><small>Dấu mốc</small><strong>Tốt nghiệp · 2026</strong></div>
+   </div>
+   <div class="timeline">
+    <article class="step reveal"><div class="n">01</div><h3>Ngày bắt đầu</h3><p>Bước vào giảng đường với nhiều kỳ vọng, tò mò và những người bạn mới.</p></article>
+    <article class="step reveal"><div class="n">02</div><h3>Học hỏi và trưởng thành</h3><p>Tích lũy kiến thức chuyên ngành, trải nghiệm thực tế và học cách vượt qua thử thách.</p></article>
+    <article class="step reveal"><div class="n">03</div><h3>Ngày hôm nay</h3><p>Nhìn lại chặng đường đã qua, tự hào về nỗ lực của bản thân và sẵn sàng bước tiếp.</p></article>
+   </div>
+  </div>
+ </section>
+
+ <!-- 04 / A PERSONAL NOTE -->
+ <section class="section" id="message">
+  <div class="chemistry-atmosphere" aria-hidden="true">
+   <div class="chem-item chem-orbit"><i></i></div>
+   <div class="chem-item chem-bubbles"><i style="--x:4px;--s:9px;--t:5.8s;--d:-1s"></i><i style="--x:30px;--s:6px;--t:7s;--d:-3s"></i><i style="--x:52px;--s:12px;--t:6.4s;--d:-4.5s"></i></div>
+   <div class="chem-item chem-sparks"><i style="--dx:-22px;--dy:-18px;--d:-.2s"></i><i style="--dx:19px;--dy:-24px;--d:-1s"></i><i style="--dx:28px;--dy:17px;--d:-1.7s"></i><i style="--dx:-17px;--dy:25px;--d:-2.2s"></i><i style="--dx:2px;--dy:-34px;--d:-.7s"></i></div>
+   <div class="chem-item chem-network"><svg viewBox="0 0 90 70"><path d="M12 35 35 12 61 24 76 52 45 61 12 35M35 12 45 61M61 24 12 35"/><circle cx="12" cy="35" r="4"/><circle cx="35" cy="12" r="4"/><circle cx="61" cy="24" r="4"/><circle cx="76" cy="52" r="4"/><circle cx="45" cy="61" r="4"/></svg></div>
+  </div>
+  <div class="container reveal">
+   <div class="wish">
+    <div class="eyebrow">04 / A PERSONAL NOTE</div>
+    <blockquote>“Cảm ơn bản thân vì đã không bỏ cuộc. Cảm ơn gia đình, thầy cô và những người đã đồng hành. Mong rằng chặng đường phía trước vẫn luôn đủ can đảm để bắt đầu và đủ kiên trì để đi đến cùng.”</blockquote>
+    <p>Đinh Quốc Duy · Graduation 2026</p>
+   </div>
+  </div>
+ </section>
+</main>
+<footer class="container">
+ <div class="eyebrow">THE NEXT CHAPTER BEGINS</div>
+ <div class="signature">Đinh Quốc Duy</div>
+ <div class="tiny">Trường Đại học Công nghiệp Thành phố Hồ Chí Minh · 2026</div>
+</footer>
+
+<div class="music">
+ <button id="musicBtn" type="button">▶ BẬT NHẠC NỀN</button>
+ <small id="musicStatus">Nhạc nền</small>
+ <audio id="bgMusic" loop preload="auto"><source src="images/music.mp3" type="audio/mpeg"></audio>
+</div>
+
+<div id="adminGenerator" class="admin-generator" hidden>
+ <button id="closeGenerator" class="admin-close" type="button">ĐÓNG</button>
+ <h3>GRADUATION LINK GENERATOR</h3>
+ <small>Nhập tên người nhận, mỗi tên một dòng:</small>
+ <textarea id="recipientNames" placeholder="Nguyễn Văn A&#10;Trần Thị B&#10;Lê Văn C"></textarea>
+ <button id="generateLinks" type="button">TẠO DANH SÁCH LINK</button>
+ <textarea id="generatedLinks" readonly placeholder="Danh sách link sẽ xuất hiện ở đây..."></textarea>
+ <button id="copyAllLinks" type="button">SAO CHÉP TẤT CẢ LINK</button>
+</div>
+
+<script>
+/* Reveal: nếu trình duyệt không hỗ trợ observer, nội dung vẫn hiển thị */
+(function(){
+ const items=document.querySelectorAll(".reveal");
+ if(!("IntersectionObserver" in window)){items.forEach(x=>x.classList.add("visible"));return}
+ try{
+  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+   if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}
+  }),{threshold:.12});
+  items.forEach(x=>observer.observe(x));
+  document.documentElement.classList.add("js-ready");
+ }catch(error){document.documentElement.classList.remove("js-ready");items.forEach(x=>x.classList.add("visible"));console.error(error)}
+})();
+
+/* Personalize greeting and invitation using ?to= */
+(function(){
+ const params=new URLSearchParams(window.location.search);
+ const recipient=(params.get("to")||"").trim();
+ const greeting=document.getElementById("personalGreeting");
+ const invitation=document.getElementById("invitationRecipient");
+ if(recipient){greeting.textContent="Xin chào, "+recipient+"!";invitation.textContent="Thân mời "+recipient}
+})();
+
+/* Admin recipient link generator: open with ?admin=1 */
+(function(){
+ const params=new URLSearchParams(window.location.search);
+ const panel=document.getElementById("adminGenerator");
+ if(params.get("admin")!=="1")return;
+ panel.hidden=false;
+ const namesInput=document.getElementById("recipientNames");
+ const output=document.getElementById("generatedLinks");
+ document.getElementById("generateLinks").addEventListener("click",function(){
+  const names=namesInput.value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+  if(!names.length){alert("Vui lòng nhập ít nhất một tên.");return}
+  const base=window.location.origin+window.location.pathname;
+  output.value=names.map(name=>{const url=new URL(base);url.searchParams.set("to",name);return name+"\n"+url.toString()}).join("\n\n");
+ });
+ document.getElementById("copyAllLinks").addEventListener("click",async function(){
+  if(!output.value.trim()){alert("Bạn chưa tạo danh sách link.");return}
+  try{await navigator.clipboard.writeText(output.value);alert("Đã sao chép toàn bộ danh sách link.")}
+  catch(error){output.focus();output.select();alert("Trình duyệt chưa cho phép sao chép tự động. Nhấn Ctrl + C để sao chép.")}
+ });
+ document.getElementById("closeGenerator").addEventListener("click",()=>panel.hidden=true);
+})();
+
+/* Vertical film reel: enlarge the frame closest to the viewport center */
+(function(){
+ const reel=document.getElementById("galleryReel");
+ const counter=document.getElementById("galleryCounter");
+ if(!reel)return;
+ const frames=Array.from(reel.querySelectorAll(".film-frame"));
+ if(!frames.length)return;
+ let ticking=false;
+ function updateActiveFrame(){
+  const center=window.innerHeight*0.5;
+  let activeIndex=0,nearest=Infinity;
+  frames.forEach((frame,index)=>{
+   const rect=frame.getBoundingClientRect();
+   const distance=Math.abs((rect.top+rect.bottom)*0.5-center);
+   if(distance<nearest){nearest=distance;activeIndex=index;}
+  });
+  frames.forEach((frame,index)=>frame.classList.toggle("is-active",index===activeIndex));
+  if(counter)counter.textContent=String(activeIndex+1).padStart(2,"0")+" / 10";
+  ticking=false;
+ }
+ function requestUpdate(){if(!ticking){ticking=true;window.requestAnimationFrame(updateActiveFrame);}}
+ window.addEventListener("scroll",requestUpdate,{passive:true});
+ window.addEventListener("resize",requestUpdate,{passive:true});
+ updateActiveFrame();
+})();
+
+/* Background music: try audible autoplay, then retry on first user interaction if blocked */
+(function(){
+ const button=document.getElementById("musicBtn"),audio=document.getElementById("bgMusic"),status=document.getElementById("musicStatus");
+ if(!button||!audio||!status)return;
+ audio.preload="auto";
+ let retryInstalled=false;
+ function setPlaying(){button.textContent="Ⅱ TẠM DỪNG NHẠC";status.textContent="Đang phát nhạc nền"}
+ async function startMusic(){
+  try{await audio.play();setPlaying();return true}
+  catch(error){
+   if(error&&error.name==="NotAllowedError"){
+    status.textContent="Trình duyệt chặn tự phát — chạm màn hình hoặc bật nhạc";
+    installRetry();
+   }else{
+    status.textContent="Không tải được nhạc — kiểm tra images/music.mp3";
+    console.error("Audio playback failed:",error);
+   }
+   return false;
+  }
+ }
+ function installRetry(){
+  if(retryInstalled)return;retryInstalled=true;
+  const retry=(event)=>{
+   if(event.target&&event.target.closest&&event.target.closest("#musicBtn"))return;
+   document.removeEventListener("pointerdown",retry,true);
+   document.removeEventListener("keydown",retry,true);
+   startMusic();
+  };
+  document.addEventListener("pointerdown",retry,true);
+  document.addEventListener("keydown",retry,true);
+ }
+ button.addEventListener("click",async()=>{
+  if(audio.paused)await startMusic();
+  else{audio.pause();status.textContent="Đã tạm dừng"}
+ });
+ audio.addEventListener("play",setPlaying);
+ audio.addEventListener("pause",()=>{button.textContent="▶ BẬT NHẠC NỀN";if(status.textContent!=="Đã tạm dừng")status.textContent="Đã tạm dừng"});
+ audio.addEventListener("error",()=>status.textContent="Không tải được nhạc — kiểm tra images/music.mp3");
+ startMusic();
+})();
+
+/* Live countdown to 23 Nov 2026, 16:00 Vietnam time (UTC+7) */
+(function(){
+ const target=new Date("2026-11-23T16:00:00+07:00").getTime();
+ const start=new Date("2026-11-11T00:00:00+07:00").getTime();
+ const ids=["days","hours","minutes","seconds"];
+ const els=ids.map(id=>document.getElementById(id));
+ const topSand=document.getElementById("sandTop");
+ const bottomSand=document.getElementById("sandBottom");
+ const stream=document.getElementById("sandStream");
+ const countdown=document.getElementById("countdown");
+ const finished=document.getElementById("countdownFinished");
+ if(els.some(el=>!el))return;
+ function update(){
+  const now=Date.now(),remaining=Math.max(0,target-now);
+  const total=Math.max(1,target-start);
+  const progress=Math.min(1,Math.max(0,(now-start)/total));
+  const values=[
+   Math.floor(remaining/86400000),
+   Math.floor((remaining%86400000)/3600000),
+   Math.floor((remaining%3600000)/60000),
+   Math.floor((remaining%60000)/1000)
+  ];
+  els.forEach((el,i)=>el.textContent=String(values[i]).padStart(2,"0"));
+  if(topSand&&bottomSand){
+   const topY=98-73*progress;
+   const topHalf=2+(40*progress);
+   const topLeft=80-topHalf,topRight=80+topHalf;
+   topSand.setAttribute("d",`M38 25 Q80 11 122 25 L${topRight.toFixed(2)} ${topY.toFixed(2)} L${topLeft.toFixed(2)} ${topY.toFixed(2)} Z`);
+   const pileY=202-(62*progress);
+   const pileHalf=4+(31*progress);
+   bottomSand.setAttribute("d",`M38 205 Q80 218 122 205 L${(80+pileHalf).toFixed(2)} ${pileY.toFixed(2)} Q80 ${(pileY-10*progress).toFixed(2)} ${(80-pileHalf).toFixed(2)} ${pileY.toFixed(2)} Z`);
+  }
+  if(remaining<=0){
+   countdown.hidden=true;
+   if(finished)finished.hidden=false;
+   if(stream)stream.style.display="none";
+   clearInterval(timer);
+  }
+ }
+ let timer=null;
+ timer=setInterval(update,1000);
+ update();
+})();
+
+
+
+</script>
+</body>
+</html>
