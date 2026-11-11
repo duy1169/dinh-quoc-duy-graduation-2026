@@ -1340,10 +1340,432 @@ footer .tiny{font-size:.76rem}
   transition:none!important;
  }
 }
+ /* =========================================
+   LUXURY GRADUATION ENVELOPE INTRO
+========================================= */
+
+body.intro-locked{
+ overflow:hidden;
+}
+
+.graduation-intro{
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ overflow:hidden;
+ padding:24px;
+ background:
+  radial-gradient(ellipse at 50% 42%,#26364b 0%,transparent 48%),
+  radial-gradient(ellipse at 15% 85%,#8d6b3b22,transparent 38%),
+  linear-gradient(145deg,#080d17,#101a2a 55%,#080d17);
+ opacity:1;
+ visibility:visible;
+ transition:opacity 1s ease,visibility 1s ease;
+}
+
+.graduation-intro::before{
+ content:"";
+ position:absolute;
+ inset:16px;
+ border:1px solid #d8b77b66;
+ pointer-events:none;
+}
+
+.graduation-intro::after{
+ content:"";
+ position:absolute;
+ inset:23px;
+ border:1px solid #d8b77b22;
+ pointer-events:none;
+}
+
+.intro-content{
+ position:relative;
+ z-index:2;
+ width:min(680px,100%);
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ text-align:center;
+}
+
+.intro-topline{
+ margin:0 0 12px;
+ color:#d8b77b;
+ font-size:.7rem;
+ font-weight:700;
+ letter-spacing:.24em!important;
+ text-transform:uppercase;
+}
+
+.intro-heading{
+ margin:0 0 8px;
+ color:#f2dfb8;
+ font-family:"Cormorant Garamond",Georgia,serif;
+ font-size:clamp(2.3rem,6vw,4.2rem);
+ font-weight:500;
+ line-height:1.05;
+}
+
+.intro-subtitle{
+ margin:0 0 34px;
+ color:#aeb8c7;
+ font-size:.78rem;
+ letter-spacing:.12em!important;
+}
+
+.intro-chemistry{
+ position:absolute;
+ inset:0;
+ pointer-events:none;
+ overflow:hidden;
+}
+
+.intro-chemistry span{
+ position:absolute;
+ width:5px;
+ height:5px;
+ border-radius:50%;
+ background:#f2dfb8;
+ box-shadow:0 0 12px #d8b77b;
+ opacity:.65;
+ animation:introSpark 4s ease-in-out infinite;
+}
+
+.intro-chemistry span:nth-child(1){left:13%;top:22%;animation-delay:-1s}
+.intro-chemistry span:nth-child(2){left:83%;top:26%;animation-delay:-2s}
+.intro-chemistry span:nth-child(3){left:20%;top:77%;animation-delay:-3s}
+.intro-chemistry span:nth-child(4){left:78%;top:75%;animation-delay:-.5s}
+.intro-chemistry span:nth-child(5){left:50%;top:13%;animation-delay:-2.5s}
+.intro-chemistry span:nth-child(6){left:91%;top:52%;animation-delay:-1.5s}
+
+@keyframes introSpark{
+ 0%,100%{transform:scale(.5);opacity:.2}
+ 50%{transform:scale(1.7);opacity:.9}
+}
+
+/* ENVELOPE STAGE */
+.envelope-stage{
+ position:relative;
+ width:min(460px,88vw);
+ height:310px;
+ perspective:1100px;
+}
+
+.envelope{
+ position:absolute;
+ left:0;
+ right:0;
+ bottom:0;
+ height:245px;
+ filter:drop-shadow(0 24px 35px #0009);
+}
+
+.envelope-card{
+ position:absolute;
+ z-index:2;
+ left:8%;
+ right:8%;
+ bottom:20px;
+ height:205px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ color:#172235;
+ text-align:center;
+ background:
+  linear-gradient(145deg,#fff9eb,#ead9b7);
+ border:1px solid #d8b77b;
+ box-shadow:0 5px 22px #0005;
+ transition:transform 1.25s cubic-bezier(.2,.75,.25,1),opacity .8s ease;
+}
+
+.envelope-card::before{
+ content:"";
+ position:absolute;
+ inset:8px;
+ border:1px solid #b18b53aa;
+ pointer-events:none;
+}
+
+.envelope-card small{
+ position:relative;
+ color:#8c6b3d;
+ font-size:.62rem;
+ font-weight:700;
+ letter-spacing:.2em!important;
+}
+
+.envelope-card strong{
+ position:relative;
+ margin:10px 0;
+ color:#182337;
+ font-family:"Cormorant Garamond",Georgia,serif;
+ font-size:clamp(1.8rem,5vw,2.6rem);
+ font-weight:600;
+ line-height:1;
+}
+
+.envelope-card span{
+ position:relative;
+ color:#705b3d;
+ font-size:.72rem;
+ letter-spacing:.12em!important;
+}
+
+.envelope-back{
+ position:absolute;
+ inset:0;
+ z-index:1;
+ background:linear-gradient(145deg,#d5b77f,#947044);
+ clip-path:polygon(0 0,100% 0,100% 100%,0 100%);
+}
+
+.envelope-left,
+.envelope-right,
+.envelope-bottom{
+ position:absolute;
+ inset:0;
+ z-index:4;
+}
+
+.envelope-left{
+ background:linear-gradient(115deg,#26364b,#172337);
+ clip-path:polygon(0 0,53% 50%,0 100%);
+}
+
+.envelope-right{
+ background:linear-gradient(245deg,#26364b,#172337);
+ clip-path:polygon(100% 0,47% 50%,100% 100%);
+}
+
+.envelope-bottom{
+ background:linear-gradient(10deg,#101a2a,#293a51);
+ clip-path:polygon(0 100%,50% 43%,100% 100%);
+}
+
+.envelope-flap{
+ position:absolute;
+ inset:0;
+ z-index:6;
+ background:linear-gradient(160deg,#3a4b60,#1b293d 70%);
+ clip-path:polygon(0 0,100% 0,50% 57%);
+ transform-origin:50% 0;
+ transform:rotateX(0deg);
+ transition:transform 1s cubic-bezier(.2,.7,.2,1);
+ backface-visibility:visible;
+}
+
+.envelope-front-copy{
+ position:absolute;
+ z-index:7;
+ left:10%;
+ right:10%;
+ bottom:35px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:8px;
+ text-align:center;
+ pointer-events:none;
+}
+
+.envelope-front-copy .front-title{
+ color:#f2dfb8;
+ font-family:"Cormorant Garamond",Georgia,serif;
+ font-size:clamp(1.45rem,4.5vw,2.1rem);
+ font-weight:600;
+ line-height:1;
+ text-shadow:0 2px 8px #0008;
+}
+
+.envelope-front-copy .front-recipient{
+ max-width:100%;
+ overflow-wrap:anywhere;
+ color:#f5f1e9;
+ font-size:.78rem;
+ letter-spacing:.08em!important;
+ text-shadow:0 2px 7px #0009;
+}
+
+.envelope-seal{
+ position:absolute;
+ z-index:8;
+ left:50%;
+ top:48%;
+ width:55px;
+ height:55px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ transform:translate(-50%,-50%);
+ border:1px solid #f2dfb8;
+ border-radius:50%;
+ color:#f8e7c5;
+ background:radial-gradient(circle at 35% 30%,#d8b77b,#8c6335 75%);
+ box-shadow:0 3px 12px #0007,inset 0 0 0 4px #d8b77b55;
+ font-family:"Cormorant Garamond",Georgia,serif;
+ font-size:1.25rem;
+ pointer-events:none;
+}
+
+.envelope-open-button{
+ position:relative;
+ z-index:10;
+ margin-top:28px;
+ min-width:190px;
+ padding:13px 24px;
+ border:1px solid #d8b77b;
+ color:#17130d;
+ background:linear-gradient(135deg,#f2dfb8,#c49b5e);
+ font-family:"Be Vietnam Pro",Arial,sans-serif;
+ font-size:.76rem;
+ font-weight:800;
+ letter-spacing:.12em!important;
+ cursor:pointer;
+ box-shadow:0 8px 25px #0005;
+ transition:transform .25s,box-shadow .25s;
+}
+
+.envelope-open-button:hover{
+ transform:translateY(-3px);
+ box-shadow:0 13px 30px #0007;
+}
+
+.intro-instruction{
+ margin:13px 0 0;
+ color:#aeb8c7;
+ font-size:.68rem;
+ letter-spacing:.08em!important;
+}
+
+/* OPENING ANIMATION */
+.graduation-intro.is-opening .envelope-flap{
+ transform:rotateX(180deg);
+ z-index:1;
+}
+
+.graduation-intro.is-opening .envelope-card{
+ z-index:7;
+ transform:translateY(-190px);
+}
+
+.graduation-intro.is-opening .envelope-front-copy,
+.graduation-intro.is-opening .envelope-seal{
+ opacity:0;
+ transition:opacity .25s ease;
+}
+
+.graduation-intro.is-opening .envelope-open-button{
+ opacity:0;
+ pointer-events:none;
+}
+
+.graduation-intro.is-leaving{
+ opacity:0;
+ visibility:hidden;
+ pointer-events:none;
+}
+
+@media(max-width:480px){
+ .graduation-intro{padding:18px}
+ .graduation-intro::before{inset:10px}
+ .graduation-intro::after{inset:16px}
+ .intro-topline{font-size:.58rem}
+ .intro-subtitle{font-size:.65rem;margin-bottom:28px}
+ .envelope-stage{height:270px}
+ .envelope{height:205px}
+ .envelope-card{height:175px}
+ .envelope-seal{width:46px;height:46px;font-size:1.05rem}
+ .envelope-front-copy{bottom:27px}
+ .envelope-card strong{font-size:1.9rem}
+ .graduation-intro.is-opening .envelope-card{
+  transform:translateY(-155px);
+ }
+}
+
+@media(prefers-reduced-motion:reduce){
+ .intro-chemistry span{animation:none}
+ .graduation-intro,
+ .envelope-card,
+ .envelope-flap{transition-duration:.15s}
+}
 </style>
 </head>
 
 <body>
+ <!-- LUXURY GRADUATION ENVELOPE INTRO -->
+<div class="graduation-intro" id="graduationIntro">
+
+ <div class="intro-chemistry" aria-hidden="true">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+ </div>
+
+ <div class="intro-content">
+
+  <p class="intro-topline">DINH QUOC DUY · GRADUATION 2026</p>
+
+  <h2 class="intro-heading">A Special Invitation</h2>
+
+  <p class="intro-subtitle">
+   A meaningful day · A memorable beginning
+  </p>
+
+  <div class="envelope-stage">
+
+   <div class="envelope">
+
+    <div class="envelope-back"></div>
+
+    <div class="envelope-card">
+     <small>YOU ARE CORDIALLY INVITED TO</small>
+     <strong>Graduation Ceremony</strong>
+     <span>23 · NOVEMBER · 2026</span>
+    </div>
+
+    <div class="envelope-left"></div>
+    <div class="envelope-right"></div>
+    <div class="envelope-bottom"></div>
+    <div class="envelope-flap"></div>
+
+    <div class="envelope-front-copy">
+     <span class="front-title">A Special Invitation</span>
+     <span class="front-recipient" id="introRecipient">
+      To Someone Special
+     </span>
+    </div>
+
+    <div class="envelope-seal" aria-hidden="true">D</div>
+
+   </div>
+
+  </div>
+
+  <button
+   class="envelope-open-button"
+   id="openGraduationEnvelope"
+   type="button"
+  >
+   OPEN INVITATION
+  </button>
+
+  <p class="intro-instruction">
+   Chạm vào phong bì để mở thiệp
+  </p>
+
+ </div>
+</div>
+<!-- END LUXURY GRADUATION ENVELOPE INTRO -->
 
 <header class="container topbar">
  <a class="brand" href="#">D.Q.DUY / GRADUATION 2026</a>
@@ -2000,9 +2422,43 @@ footer .tiny{font-size:.76rem}
 
 })();
 
-
-/* PERSONALIZE GREETING AND INVITATION USING ?to= */
+/* PERSONALIZE GREETING, INVITATION AND ENVELOPE USING ?to= */
 (function(){
+
+ const params=new URLSearchParams(window.location.search);
+ const recipient=(params.get("to")||"").trim();
+
+ const greeting=document.getElementById("personalGreeting");
+ const invitation=document.getElementById("invitationRecipient");
+ const envelopeRecipient=document.getElementById("introRecipient");
+
+ if(recipient){
+
+  if(greeting){
+   greeting.textContent="Xin chào, "+recipient+"!";
+  }
+
+  if(invitation){
+   invitation.textContent="Thân mời "+recipient;
+  }
+
+  if(envelopeRecipient){
+   envelopeRecipient.textContent="To "+recipient;
+  }
+
+ }else{
+
+  if(envelopeRecipient){
+   envelopeRecipient.textContent="To Someone Special";
+  }
+
+  if(invitation){
+   invitation.textContent="Thân mời Bạn";
+  }
+
+ }
+
+})();
 
  const params=new URLSearchParams(window.location.search);
  const recipient=(params.get("to")||"").trim();
@@ -2408,6 +2864,57 @@ footer .tiny{font-size:.76rem}
 
 })();
 
+</script>
+ <script>
+/* GRADUATION ENVELOPE OPENING */
+(function(){
+
+ const intro=document.getElementById("graduationIntro");
+ const openButton=document.getElementById("openGraduationEnvelope");
+
+ if(!intro||!openButton)return;
+
+ document.body.classList.add("intro-locked");
+
+ let isOpening=false;
+
+ openButton.addEventListener("click",function(){
+
+  if(isOpening)return;
+
+  isOpening=true;
+  openButton.disabled=true;
+
+  /* Start opening the envelope */
+  intro.classList.add("is-opening");
+
+  /* Start background music after user interaction */
+  const audio=document.getElementById("bgMusic");
+
+  if(audio){
+   audio.play().catch(function(error){
+    console.log("Music will require manual playback:",error);
+   });
+  }
+
+  /* Let the invitation card slide out */
+  setTimeout(function(){
+
+   intro.classList.add("is-leaving");
+
+  },1900);
+
+  /* Remove intro and reveal the original website */
+  setTimeout(function(){
+
+   intro.remove();
+   document.body.classList.remove("intro-locked");
+
+  },2900);
+
+ });
+
+})();
 </script>
 
 </body>
