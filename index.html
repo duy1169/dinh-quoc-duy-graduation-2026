@@ -2425,6 +2425,9 @@ body.intro-locked{
 /* PERSONALIZE GREETING, INVITATION AND ENVELOPE USING ?to= */
 (function(){
 
+ /* PERSONALIZE GREETING, INVITATION AND ENVELOPE USING ?to= */
+(function(){
+
  const params=new URLSearchParams(window.location.search);
  const recipient=(params.get("to")||"").trim();
 
@@ -2459,6 +2462,9 @@ body.intro-locked{
  }
 
 })();
+
+/* ADMIN RECIPIENT LINK GENERATOR */
+(function(){
 
  const params=new URLSearchParams(window.location.search);
  const recipient=(params.get("to")||"").trim();
