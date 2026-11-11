@@ -2386,540 +2386,280 @@ body.intro-locked{
 </div>
 
 <script>
-
-/* REVEAL ANIMATION */
+/* SITE INTERACTIONS — consolidated and guarded */
 (function(){
+ "use strict";
 
- const items=document.querySelectorAll(".reveal");
-
- if(!("IntersectionObserver" in window)){
-  items.forEach(x=>x.classList.add("visible"));
-  return;
+ /* 1. REVEAL ANIMATION */
+ const revealItems=document.querySelectorAll(".reveal");
+ if("IntersectionObserver" in window){
+  try{
+   const revealObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+     if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+      revealObserver.unobserve(entry.target);
+     }
+    });
+   },{threshold:0.12});
+   revealItems.forEach(function(item){revealObserver.observe(item);});
+   document.documentElement.classList.add("js-ready");
+  }catch(error){
+   document.documentElement.classList.remove("js-ready");
+   revealItems.forEach(function(item){item.classList.add("visible");});
+   console.error("Reveal animation:",error);
+  }
+ }else{
+  revealItems.forEach(function(item){item.classList.add("visible");});
  }
 
- try{
-
-  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-
-   if(entry.isIntersecting){
-    entry.target.classList.add("visible");
-    observer.unobserve(entry.target);
-   }
-
-  }),{threshold:.12});
-
-  items.forEach(x=>observer.observe(x));
-
-  document.documentElement.classList.add("js-ready");
-
- }catch(error){
-
-  document.documentElement.classList.remove("js-ready");
-  items.forEach(x=>x.classList.add("visible"));
-  console.error(error);
-
- }
-
-})();
-
-/* PERSONALIZE GREETING, INVITATION AND ENVELOPE USING ?to= */
-(function(){
-
- /* PERSONALIZE GREETING, INVITATION AND ENVELOPE USING ?to= */
-(function(){
-
+ /* 2. PERSONALIZED RECIPIENT: ?to=NAME */
  const params=new URLSearchParams(window.location.search);
  const recipient=(params.get("to")||"").trim();
-
  const greeting=document.getElementById("personalGreeting");
  const invitation=document.getElementById("invitationRecipient");
  const envelopeRecipient=document.getElementById("introRecipient");
-
  if(recipient){
-
-  if(greeting){
-   greeting.textContent="Xin chào, "+recipient+"!";
-  }
-
-  if(invitation){
-   invitation.textContent="Thân mời "+recipient;
-  }
-
-  if(envelopeRecipient){
-   envelopeRecipient.textContent="To "+recipient;
-  }
-
+  if(greeting) greeting.textContent="Xin chào, "+recipient+"!";
+  if(invitation) invitation.textContent="Thân mời "+recipient;
+  if(envelopeRecipient) envelopeRecipient.textContent="To "+recipient;
  }else{
-
-  if(envelopeRecipient){
-   envelopeRecipient.textContent="To Someone Special";
-  }
-
-  if(invitation){
-   invitation.textContent="Thân mời Bạn";
-  }
-
+  if(greeting) greeting.textContent="";
+  if(invitation) invitation.textContent="Thân mời Bạn";
+  if(envelopeRecipient) envelopeRecipient.textContent="To Someone Special";
  }
 
-})();
-
-/* ADMIN RECIPIENT LINK GENERATOR */
-(function(){
-
- const params=new URLSearchParams(window.location.search);
- const recipient=(params.get("to")||"").trim();
-
- const greeting=document.getElementById("personalGreeting");
- const invitation=document.getElementById("invitationRecipient");
-
- if(recipient){
-  greeting.textContent="Xin chào, "+recipient+"!";
-  invitation.textContent="Thân mời "+recipient;
- }
-
-})();
-
-
-/* ADMIN RECIPIENT LINK GENERATOR */
-(function(){
-
- const params=new URLSearchParams(window.location.search);
- const panel=document.getElementById("adminGenerator");
-
- if(params.get("admin")!=="1")return;
-
- panel.hidden=false;
-
- const namesInput=document.getElementById("recipientNames");
- const output=document.getElementById("generatedLinks");
-
- document.getElementById("generateLinks").addEventListener("click",function(){
-
-  const names=namesInput.value
-   .split(/\r?\n/)
-   .map(x=>x.trim())
-   .filter(Boolean);
-
-  if(!names.length){
-   alert("Vui lòng nhập ít nhất một tên.");
-   return;
-  }
-
-  const base=window.location.origin+window.location.pathname;
-
-  output.value=names.map(name=>{
-
-   const url=new URL(base);
-   url.searchParams.set("to",name);
-
-   return name+"\n"+url.toString();
-
-  }).join("\n\n");
-
- });
-
- document.getElementById("copyAllLinks").addEventListener("click",async function(){
-
-  if(!output.value.trim()){
-   alert("Bạn chưa tạo danh sách link.");
-   return;
-  }
-
-  try{
-
-   await navigator.clipboard.writeText(output.value);
-   alert("Đã sao chép toàn bộ danh sách link.");
-
-  }catch(error){
-
-   output.focus();
-   output.select();
-
-   alert("Trình duyệt chưa cho phép sao chép tự động. Nhấn Ctrl + C để sao chép.");
-
-  }
-
- });
-
- document.getElementById("closeGenerator").addEventListener("click",()=>{
-  panel.hidden=true;
- });
-
-})();
-
-
-/* VERTICAL FILM REEL: IMAGE FALLBACK + ACTIVE FRAME */
-(function(){
-
- const reel=document.getElementById("galleryReel");
- const counter=document.getElementById("galleryCounter");
-
- if(!reel)return;
-
- const frames=Array.from(reel.querySelectorAll(".film-frame"));
-
- if(!frames.length)return;
-
- frames.forEach((frame,index)=>{
-
-  const img=frame.querySelector("img");
-
-  if(!img)return;
-
-  const showFallback=()=>{
-
-   frame.classList.add("has-image-error");
-
-   if(!frame.querySelector(".film-image-fallback")){
-
-    const fallback=document.createElement("div");
-
-    fallback.className="film-image-fallback";
-
-    fallback.textContent=
-     "IMAGE "+
-     String(index+1).padStart(2,"0")+
-     " · PLEASE CHECK images/"+
-     (img.getAttribute("src")||"").split("/").pop();
-
-    frame.appendChild(fallback);
-
-   }
-
-  };
-
-  img.addEventListener("error",showFallback,{once:true});
-
-  if(img.complete && img.naturalWidth===0){
-   showFallback();
-  }
-
- });
-
- let ticking=false;
-
- function updateActiveFrame(){
-
-  const center=window.innerHeight*0.5;
-
-  let activeIndex=0;
-  let nearest=Infinity;
-
-  frames.forEach((frame,index)=>{
-
-   const rect=frame.getBoundingClientRect();
-
-   const distance=Math.abs(
-    (rect.top+rect.bottom)*0.5-center
-   );
-
-   if(distance<nearest){
-    nearest=distance;
-    activeIndex=index;
-   }
-
-  });
-
-  frames.forEach((frame,index)=>{
-   frame.classList.toggle("is-active",index===activeIndex);
-  });
-
-  if(counter){
-
-   counter.textContent=
-    String(activeIndex+1).padStart(2,"0")+
-    " / "+
-    String(frames.length).padStart(2,"0");
-
-  }
-
-  ticking=false;
-
- }
-
- function requestUpdate(){
-
-  if(!ticking){
-   ticking=true;
-   window.requestAnimationFrame(updateActiveFrame);
-  }
-
- }
-
- window.addEventListener("scroll",requestUpdate,{passive:true});
- window.addEventListener("resize",requestUpdate,{passive:true});
- window.addEventListener("load",requestUpdate,{once:true});
-
- updateActiveFrame();
-
-})();
-
-
-/* BACKGROUND MUSIC */
-(function(){
-
- const button=document.getElementById("musicBtn");
- const audio=document.getElementById("bgMusic");
- const status=document.getElementById("musicStatus");
-
- if(!button||!audio||!status)return;
-
- audio.preload="auto";
-
- let retryInstalled=false;
-
- function setPlaying(){
-
-  button.textContent="Ⅱ TẠM DỪNG NHẠC";
-  status.textContent="Đang phát nhạc nền";
-
- }
-
- async function startMusic(){
-
-  try{
-
-   await audio.play();
-   setPlaying();
-
-   return true;
-
-  }catch(error){
-
-   if(error&&error.name==="NotAllowedError"){
-
-    status.textContent="Trình duyệt chặn tự phát — chạm màn hình hoặc bật nhạc";
-    installRetry();
-
-   }else{
-
-    status.textContent="Không tải được nhạc — kiểm tra images/music.mp3";
-    console.error("Audio playback failed:",error);
-
-   }
-
-   return false;
-
-  }
-
- }
-
- function installRetry(){
-
-  if(retryInstalled)return;
-
-  retryInstalled=true;
-
-  const retry=(event)=>{
-
-   if(
-    event.target&&
-    event.target.closest&&
-    event.target.closest("#musicBtn")
-   )return;
-
-   document.removeEventListener("pointerdown",retry,true);
-   document.removeEventListener("keydown",retry,true);
-
-   startMusic();
-
-  };
-
-  document.addEventListener("pointerdown",retry,true);
-  document.addEventListener("keydown",retry,true);
-
- }
-
- button.addEventListener("click",async()=>{
-
-  if(audio.paused){
-
-   await startMusic();
-
-  }else{
-
-   audio.pause();
-   status.textContent="Đã tạm dừng";
-
-  }
-
- });
-
- audio.addEventListener("play",setPlaying);
-
- audio.addEventListener("pause",()=>{
-
-  button.textContent="▶ BẬT NHẠC NỀN";
-
-  if(status.textContent!=="Đã tạm dừng"){
-   status.textContent="Đã tạm dừng";
-  }
-
- });
-
- audio.addEventListener("error",()=>{
-
-  status.textContent="Không tải được nhạc — kiểm tra images/music.mp3";
-
- });
-
- startMusic();
-
-})();
-
-
-/* LIVE COUNTDOWN TO 23 NOV 2026, 16:00 VIETNAM TIME */
-(function(){
-
- const target=new Date("2026-11-23T16:00:00+07:00").getTime();
-
- const start=new Date("2026-11-11T00:00:00+07:00").getTime();
-
- const ids=["days","hours","minutes","seconds"];
-
- const els=ids.map(id=>document.getElementById(id));
-
- const topSand=document.getElementById("sandTop");
- const bottomSand=document.getElementById("sandBottom");
- const stream=document.getElementById("sandStream");
-
- const countdown=document.getElementById("countdown");
- const finished=document.getElementById("countdownFinished");
-
- if(els.some(el=>!el))return;
-
- function update(){
-
-  const now=Date.now();
-
-  const remaining=Math.max(0,target-now);
-
-  const total=Math.max(1,target-start);
-
-  const progress=Math.min(
-   1,
-   Math.max(0,(now-start)/total)
-  );
-
-  const values=[
-
-   Math.floor(remaining/86400000),
-
-   Math.floor((remaining%86400000)/3600000),
-
-   Math.floor((remaining%3600000)/60000),
-
-   Math.floor((remaining%60000)/1000)
-
-  ];
-
-  els.forEach((el,i)=>{
-
-   el.textContent=String(values[i]).padStart(2,"0");
-
-  });
-
-  if(topSand&&bottomSand){
-
-   const topY=98-73*progress;
-
-   const topHalf=2+(40*progress);
-
-   const topLeft=80-topHalf;
-   const topRight=80+topHalf;
-
-   topSand.setAttribute(
-    "d",
-    `M38 25 Q80 11 122 25 L${topRight.toFixed(2)} ${topY.toFixed(2)} L${topLeft.toFixed(2)} ${topY.toFixed(2)} Z`
-   );
-
-   const pileY=202-(62*progress);
-
-   const pileHalf=4+(31*progress);
-
-   bottomSand.setAttribute(
-    "d",
-    `M38 205 Q80 218 122 205 L${(80+pileHalf).toFixed(2)} ${pileY.toFixed(2)} Q80 ${(pileY-10*progress).toFixed(2)} ${(80-pileHalf).toFixed(2)} ${pileY.toFixed(2)} Z`
-   );
-
-  }
-
-  if(remaining<=0){
-
-   countdown.hidden=true;
-
-   if(finished){
-    finished.hidden=false;
-   }
-
-   if(stream){
-    stream.style.display="none";
-   }
-
-   clearInterval(timer);
-
-  }
-
- }
-
- let timer=null;
-
- timer=setInterval(update,1000);
-
- update();
-
-})();
-
-</script>
- <script>
-/* GRADUATION ENVELOPE OPENING */
-(function(){
-
- const intro=document.getElementById("graduationIntro");
- const openButton=document.getElementById("openGraduationEnvelope");
-
- if(!intro||!openButton)return;
-
- document.body.classList.add("intro-locked");
-
- let isOpening=false;
-
- openButton.addEventListener("click",function(){
-
-  if(isOpening)return;
-
-  isOpening=true;
-  openButton.disabled=true;
-
-  /* Start opening the envelope */
-  intro.classList.add("is-opening");
-
-  /* Start background music after user interaction */
-  const audio=document.getElementById("bgMusic");
-
-  if(audio){
-   audio.play().catch(function(error){
-    console.log("Music will require manual playback:",error);
+ /* 3. ADMIN RECIPIENT LINK GENERATOR: ?admin=1 */
+ const adminPanel=document.getElementById("adminGenerator");
+ if(adminPanel && params.get("admin")==="1"){
+  adminPanel.hidden=false;
+  const namesInput=document.getElementById("recipientNames");
+  const output=document.getElementById("generatedLinks");
+  const generateButton=document.getElementById("generateLinks");
+  const copyButton=document.getElementById("copyAllLinks");
+  const closeButton=document.getElementById("closeGenerator");
+  if(generateButton && namesInput && output){
+   generateButton.addEventListener("click",function(){
+    const names=namesInput.value.split(/\r?\n/).map(function(name){
+     return name.trim();
+    }).filter(Boolean);
+    if(!names.length){
+     window.alert("Vui lòng nhập ít nhất một tên.");
+     return;
+    }
+    const base=window.location.origin+window.location.pathname;
+    output.value=names.map(function(name){
+     const url=new URL(base);
+     url.searchParams.set("to",name);
+     return name+"\n"+url.toString();
+    }).join("\n\n");
    });
   }
+  if(copyButton && output){
+   copyButton.addEventListener("click",async function(){
+    if(!output.value.trim()){
+     window.alert("Bạn chưa tạo danh sách link.");
+     return;
+    }
+    try{
+     if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(output.value);
+      window.alert("Đã sao chép toàn bộ danh sách link.");
+     }else{
+      output.focus();
+      output.select();
+      const copied=document.execCommand("copy");
+      window.alert(copied
+       ? "Đã sao chép toàn bộ danh sách link."
+       : "Nhấn Ctrl + C để sao chép danh sách link.");
+     }
+    }catch(error){
+     output.focus();
+     output.select();
+     window.alert("Trình duyệt chưa cho phép sao chép tự động. Nhấn Ctrl + C để sao chép.");
+    }
+   });
+  }
+  if(closeButton){
+   closeButton.addEventListener("click",function(){adminPanel.hidden=true;});
+  }
+ }
 
-  /* Let the invitation card slide out */
-  setTimeout(function(){
+ /* 4. VERTICAL FILM REEL: FALLBACK + ACTIVE FRAME */
+ const reel=document.getElementById("galleryReel");
+ const galleryCounter=document.getElementById("galleryCounter");
+ if(reel){
+  const frames=Array.from(reel.querySelectorAll(".film-frame"));
+  frames.forEach(function(frame,index){
+   const img=frame.querySelector("img");
+   if(!img) return;
+   const showFallback=function(){
+    frame.classList.add("has-image-error");
+    if(!frame.querySelector(".film-image-fallback")){
+     const fallback=document.createElement("div");
+     fallback.className="film-image-fallback";
+     fallback.textContent="IMAGE "+String(index+1).padStart(2,"0")+
+      " · PLEASE CHECK images/"+(img.getAttribute("src")||"").split("/").pop();
+     frame.appendChild(fallback);
+    }
+   };
+   img.addEventListener("error",showFallback,{once:true});
+   if(img.complete && img.naturalWidth===0) showFallback();
+  });
+  let frameUpdatePending=false;
+  function updateActiveFrame(){
+   const viewportCenter=window.innerHeight*0.5;
+   let activeIndex=0;
+   let nearestDistance=Infinity;
+   frames.forEach(function(frame,index){
+    const rect=frame.getBoundingClientRect();
+    const distance=Math.abs((rect.top+rect.bottom)*0.5-viewportCenter);
+    if(distance<nearestDistance){
+     nearestDistance=distance;
+     activeIndex=index;
+    }
+   });
+   frames.forEach(function(frame,index){
+    frame.classList.toggle("is-active",index===activeIndex);
+   });
+   if(galleryCounter){
+    galleryCounter.textContent=String(activeIndex+1).padStart(2,"0")+
+     " / "+String(frames.length).padStart(2,"0");
+   }
+   frameUpdatePending=false;
+  }
+  function requestFrameUpdate(){
+   if(!frameUpdatePending){
+    frameUpdatePending=true;
+    window.requestAnimationFrame(updateActiveFrame);
+   }
+  }
+  window.addEventListener("scroll",requestFrameUpdate,{passive:true});
+  window.addEventListener("resize",requestFrameUpdate,{passive:true});
+  window.addEventListener("load",requestFrameUpdate,{once:true});
+  updateActiveFrame();
+ }
 
-   intro.classList.add("is-leaving");
+ /* 5. BACKGROUND MUSIC */
+ const musicButton=document.getElementById("musicBtn");
+ const audio=document.getElementById("bgMusic");
+ const musicStatus=document.getElementById("musicStatus");
+ function setMusicPlaying(){
+  if(musicButton) musicButton.textContent="Ⅱ TẠM DỪNG NHẠC";
+  if(musicStatus) musicStatus.textContent="Đang phát nhạc nền";
+ }
+ function setMusicPaused(){
+  if(musicButton) musicButton.textContent="▶ BẬT NHẠC NỀN";
+  if(musicStatus && musicStatus.textContent==="Đang phát nhạc nền"){
+   musicStatus.textContent="Đã tạm dừng";
+  }
+ }
+ async function playMusic(){
+  if(!audio) return false;
+  try{
+   await audio.play();
+   setMusicPlaying();
+   return true;
+  }catch(error){
+   if(musicStatus){
+    musicStatus.textContent=(error && error.name==="NotAllowedError")
+     ? "Chạm nút bật nhạc để phát"
+     : "Không tải được nhạc — kiểm tra images/music.mp3";
+   }
+   if(error && error.name!=="NotAllowedError"){
+    console.error("Audio playback failed:",error);
+   }
+   return false;
+  }
+ }
+ if(audio){
+  audio.preload="auto";
+  audio.addEventListener("play",setMusicPlaying);
+  audio.addEventListener("pause",setMusicPaused);
+  audio.addEventListener("error",function(){
+   if(musicStatus) musicStatus.textContent="Không tải được nhạc — kiểm tra images/music.mp3";
+  });
+ }
+ if(musicButton && audio){
+  musicButton.addEventListener("click",function(){
+   if(audio.paused) playMusic();
+   else audio.pause();
+  });
+ }
 
-  },1900);
+ /* 6. LIVE COUNTDOWN — 23 NOVEMBER 2026, 16:00 VIETNAM TIME */
+ const targetTime=new Date("2026-11-23T16:00:00+07:00").getTime();
+ const countdownIds=["days","hours","minutes","seconds"];
+ const countdownElements=countdownIds.map(function(id){return document.getElementById(id);});
+ const topSand=document.getElementById("sandTop");
+ const bottomSand=document.getElementById("sandBottom");
+ const sandStream=document.getElementById("sandStream");
+ const countdown=document.getElementById("countdown");
+ const countdownFinished=document.getElementById("countdownFinished");
+ if(countdown && countdownElements.every(Boolean)){
+  let countdownTimer=null;
+  function updateCountdown(){
+   const now=Date.now();
+   const remaining=Math.max(0,targetTime-now);
+   const values=[
+    Math.floor(remaining/86400000),
+    Math.floor((remaining%86400000)/3600000),
+    Math.floor((remaining%3600000)/60000),
+    Math.floor((remaining%60000)/1000)
+   ];
+   countdownElements.forEach(function(element,index){
+    element.textContent=String(values[index]).padStart(2,"0");
+   });
+   if(topSand && bottomSand){
+    const startTime=new Date("2026-11-11T00:00:00+07:00").getTime();
+    const totalTime=Math.max(1,targetTime-startTime);
+    const progress=Math.min(1,Math.max(0,(now-startTime)/totalTime));
+    const topY=98-73*progress;
+    const topHalf=2+40*progress;
+    topSand.setAttribute("d",
+     "M38 25 Q80 11 122 25 L"+(80+topHalf).toFixed(2)+" "+topY.toFixed(2)+
+     " L"+(80-topHalf).toFixed(2)+" "+topY.toFixed(2)+" Z");
+    const pileY=202-62*progress;
+    const pileHalf=4+31*progress;
+    bottomSand.setAttribute("d",
+     "M38 205 Q80 218 122 205 L"+(80+pileHalf).toFixed(2)+" "+pileY.toFixed(2)+
+     " Q80 "+(pileY-10*progress).toFixed(2)+" "+(80-pileHalf).toFixed(2)+
+     " "+pileY.toFixed(2)+" Z");
+   }
+   if(remaining<=0){
+    countdown.hidden=true;
+    if(countdownFinished) countdownFinished.hidden=false;
+    if(sandStream) sandStream.style.display="none";
+    if(countdownTimer!==null) window.clearInterval(countdownTimer);
+   }
+  }
+  updateCountdown();
+  if(Date.now()<targetTime){
+   countdownTimer=window.setInterval(updateCountdown,1000);
+  }
+ }
 
-  /* Remove intro and reveal the original website */
-  setTimeout(function(){
-
-   intro.remove();
-   document.body.classList.remove("intro-locked");
-
-  },2900);
-
- });
-
+ /* 7. GRADUATION ENVELOPE OPENING */
+ const intro=document.getElementById("graduationIntro");
+ const openButton=document.getElementById("openGraduationEnvelope");
+ if(intro && openButton){
+  document.body.classList.add("intro-locked");
+  let isOpening=false;
+  openButton.addEventListener("click",function(){
+   if(isOpening) return;
+   isOpening=true;
+   openButton.disabled=true;
+   intro.classList.add("is-opening");
+   if(audio) playMusic();
+   window.setTimeout(function(){
+    if(intro.isConnected) intro.classList.add("is-leaving");
+   },1900);
+   window.setTimeout(function(){
+    if(intro.isConnected) intro.remove();
+    document.body.classList.remove("intro-locked");
+   },2900);
+  });
+ }
 })();
 </script>
 
