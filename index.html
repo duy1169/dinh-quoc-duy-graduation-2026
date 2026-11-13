@@ -2739,6 +2739,13 @@ body.intro-locked{
  const openButton=document.getElementById("openGraduationEnvelope");
  const visitorNameInput=document.getElementById("introVisitorName");
  const visitorNameStatus=document.getElementById("introNameStatus");
+ const visitorNameForm=document.getElementById("introNameForm");
+ if(visitorNameForm && openButton){
+  visitorNameForm.addEventListener("submit",function(event){
+   event.preventDefault();
+   openButton.click();
+  });
+ }
  if(intro && openButton){
   document.body.classList.add("intro-locked");
   let isOpening=false;
@@ -2812,7 +2819,7 @@ body.intro-locked{
   if(!raw) return {source:"direct",host:null};
   try{
    const host=new URL(raw).hostname.toLowerCase();
-   if(/(^|\\.)facebook\\.com$|(^|\\.)fb\\.com$|(^|\\.)fb\\.me$/.test(host) || host==="l.facebook.com"){
+   if(/(^|\.)facebook\.com$|(^|\.)fb\.com$|(^|\.)fb\.me$/.test(host) || host==="l.facebook.com"){
     return {source:"facebook",host:host};
    }
    if(host===location.hostname) return {source:"direct",host:host};
@@ -2846,7 +2853,7 @@ body.intro-locked{
  window.__recordInvitationVisitorName=function(name){
   return insertEvent("name_submission",name);
  };
-})();;
+})();
 
 })();
 </script>
