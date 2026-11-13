@@ -1695,6 +1695,40 @@ body.intro-locked{
  .envelope-card,
  .envelope-flap{transition-duration:.15s}
 }
+
+/* OPTIONAL VISITOR NAME — does not block the invitation */
+.visitor-note{
+ position:fixed;left:18px;bottom:18px;z-index:20;
+ width:min(320px,calc(100vw - 36px));
+ color:var(--white);background:#111927f2;
+ border:1px solid #d8b77b88;box-shadow:0 10px 32px #0008;
+ backdrop-filter:blur(12px);
+}
+.visitor-note-toggle{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ width:100%;padding:12px 14px;color:var(--gold-light);
+ background:transparent;border:0;text-align:left;font:inherit;font-size:.78rem;
+ cursor:pointer;
+}
+.visitor-note-body{padding:0 14px 14px}
+.visitor-note-body[hidden]{display:none}
+.visitor-note-body p{margin:0 0 10px;color:var(--muted);font-size:.75rem;line-height:1.5}
+.visitor-note-body label{display:block;margin-bottom:6px;color:var(--gold);font-size:.72rem}
+.visitor-note-body input{
+ width:100%;padding:10px 11px;color:var(--white);background:#090d16;
+ border:1px solid #ffffff35;border-radius:2px;font:inherit;font-size:.82rem;
+}
+.visitor-note-actions{display:flex;gap:8px;margin-top:10px}
+.visitor-note-actions button{
+ padding:8px 11px;border:1px solid #d8b77b88;background:var(--gold);
+ color:#17130d;font:inherit;font-size:.72rem;font-weight:700;cursor:pointer;
+}
+.visitor-note-actions button.secondary{background:transparent;color:var(--muted);border-color:#ffffff35}
+#visitorNoteStatus{display:block;min-height:16px;margin-top:8px;color:var(--muted);font-size:.68rem}
+@media(max-width:760px){
+ .visitor-note{left:12px;bottom:12px;width:min(300px,calc(100vw - 24px))}
+}
+
 </style>
 </head>
 
@@ -2366,6 +2400,26 @@ body.intro-locked{
  </audio>
 </div>
 
+
+<!-- OPTIONAL VISITOR NAME — anonymous viewing is always allowed -->
+<aside class="visitor-note" id="visitorNote" aria-label="Tùy chọn để lại tên">
+ <button class="visitor-note-toggle" id="visitorNoteToggle" type="button" aria-expanded="false" aria-controls="visitorNoteBody">
+  <span>Để lại tên (không bắt buộc)</span><span aria-hidden="true">＋</span>
+ </button>
+ <div class="visitor-note-body" id="visitorNoteBody" hidden>
+  <p>Bạn có thể để lại tên để Duy biết ai đã ghé thăm. Không nhập tên vẫn xem thiệp bình thường.</p>
+  <form id="visitorNameForm">
+   <label for="visitorNameInput">Tên của bạn</label>
+   <input id="visitorNameInput" name="visitorName" type="text" maxlength="80" autocomplete="name" placeholder="Nhập tên (tùy chọn)">
+   <div class="visitor-note-actions">
+    <button type="submit">Gửi tên</button>
+    <button class="secondary" id="visitorNoteClose" type="button">Để sau</button>
+   </div>
+   <span id="visitorNoteStatus" role="status" aria-live="polite"></span>
+  </form>
+ </div>
+</aside>
+
 <!-- ADMIN LINK GENERATOR -->
 <div id="adminGenerator" class="admin-generator" hidden>
 
@@ -2385,6 +2439,7 @@ body.intro-locked{
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.min.js" defer></script>
 <script>
 /* SITE INTERACTIONS — consolidated and guarded */
 (function(){
@@ -2660,6 +2715,112 @@ body.intro-locked{
    },2900);
   });
  }
+
+/* 8. PRIVATE VISIT ANALYTICS — no IP collection; names are voluntary */
+(function(){
+ "use strict";
+ const SUPABASE_URL="https://qagzbrrfdizraxxzsrtt.supabase.co";
+ const SUPABASE_PUBLISHABLE_KEY="sb_publishable_xLt83CxP94Ydjstwot4Gzg_8HxjLy2e";
+ const note=document.getElementById("visitorNote");
+ const toggle=document.getElementById("visitorNoteToggle");
+ const body=document.getElementById("visitorNoteBody");
+ const form=document.getElementById("visitorNameForm");
+ const input=document.getElementById("visitorNameInput");
+ const close=document.getElementById("visitorNoteClose");
+ const status=document.getElementById("visitorNoteStatus");
+ if(!note || !window.supabase) return;
+ const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+ function getSessionId(){
+  let id=sessionStorage.getItem("dqg_analytics_session");
+  if(!id){
+   id=(window.crypto && crypto.randomUUID)
+    ? crypto.randomUUID()
+    : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(ch){
+       const r=Math.random()*16|0;
+       return (ch==="x"?r:(r&3|8)).toString(16);
+      });
+   sessionStorage.setItem("dqg_analytics_session",id);
+  }
+  return id;
+ }
+ function getDeviceType(){
+  const ua=navigator.userAgent||"";
+  if(/iPad|Tablet|PlayBook|Silk/i.test(ua)) return "tablet";
+  if(/Mobi|Android|iPhone|iPod|Windows Phone/i.test(ua)) return "mobile";
+  return "desktop";
+ }
+ function getSource(){
+  const raw=document.referrer||"";
+  if(!raw) return {source:"direct",host:null};
+  try{
+   const host=new URL(raw).hostname.toLowerCase();
+   if(/(^|\.)facebook\.com$|(^|\.)fb\.com$|(^|\.)fb\.me$/.test(host) || host==="l.facebook.com") {
+    return {source:"facebook",host:host};
+   }
+   if(host===location.hostname) return {source:"direct",host:host};
+   return {source:"referral",host:host};
+  }catch(error){return {source:"unknown",host:null};}
+ }
+ const sourceInfo=getSource();
+ const sessionId=getSessionId();
+ async function insertEvent(eventType,name){
+  const payload={
+   session_id:sessionId,
+   event_type:eventType,
+   visitor_name:name||null,
+   source:sourceInfo.source,
+   referrer_host:sourceInfo.host,
+   device_type:getDeviceType(),
+   page_path:location.pathname
+  };
+  const result=await client.from("invitation_visits").insert(payload);
+  if(result.error) throw result.error;
+ }
+ if(!sessionStorage.getItem("dqg_visit_logged")){
+  insertEvent("visit",null).then(function(){
+   sessionStorage.setItem("dqg_visit_logged","1");
+  }).catch(function(error){
+   console.warn("Visit tracking unavailable:",error.message||error);
+  });
+ }
+ if(toggle && body){
+  toggle.addEventListener("click",function(){
+   const expanded=toggle.getAttribute("aria-expanded")==="true";
+   toggle.setAttribute("aria-expanded",String(!expanded));
+   body.hidden=expanded;
+   toggle.lastElementChild.textContent=expanded?"＋":"−";
+  });
+ }
+ if(close && toggle && body){
+  close.addEventListener("click",function(){
+   body.hidden=true;toggle.setAttribute("aria-expanded","false");
+   toggle.lastElementChild.textContent="＋";
+  });
+ }
+ if(form && input){
+  form.addEventListener("submit",async function(event){
+   event.preventDefault();
+   const name=input.value.trim();
+   if(!name){status.textContent="Bạn chưa nhập tên.";return;}
+   status.textContent="Đang gửi…";
+   const submit=form.querySelector('button[type="submit"]');
+   if(submit) submit.disabled=true;
+   try{
+    await insertEvent("name_submission",name);
+    status.textContent="Cảm ơn bạn đã để lại lời chào!";
+    input.value="";
+    window.setTimeout(function(){
+     note.hidden=true;
+    },1800);
+   }catch(error){
+    status.textContent="Chưa gửi được. Bạn có thể thử lại sau.";
+    console.warn("Name submission unavailable:",error.message||error);
+    if(submit) submit.disabled=false;
+   }
+  });
+ }
+})();
+
 })();
 </script>
 
