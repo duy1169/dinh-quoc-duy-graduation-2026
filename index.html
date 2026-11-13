@@ -1417,6 +1417,50 @@ body.intro-locked{
  letter-spacing:.12em!important;
 }
 
+/* REQUIRED VISITOR NAME BEFORE OPENING */
+.intro-name-form{
+ width:min(390px,100%);
+ margin:0 auto 22px;
+ text-align:left;
+}
+.intro-name-form label{
+ display:block;
+ margin-bottom:8px;
+ color:#d8b77b;
+ font-size:.68rem;
+ font-weight:700;
+ letter-spacing:.08em!important;
+}
+.intro-name-form input{
+ width:100%;
+ min-height:46px;
+ padding:11px 13px;
+ color:#f5f1e9;
+ background:#090d16cc;
+ border:1px solid #d8b77b88;
+ border-radius:2px;
+ outline:none;
+ font:inherit;
+ font-size:.86rem;
+}
+.intro-name-form input:focus{
+ border-color:#f2dfb8;
+ box-shadow:0 0 0 2px #d8b77b22;
+}
+.intro-name-form input::placeholder{color:#8792a2}
+#introNameStatus{
+ min-height:16px;
+ margin:7px 0 0;
+ color:#aeb8c7;
+ font-size:.68rem;
+ text-align:center;
+}
+#introNameStatus.is-error{color:#ffb4a8}
+@media(max-width:480px){
+ .intro-name-form{margin-bottom:14px}
+ .intro-name-form input{min-height:43px}
+}
+
 .intro-chemistry{
  position:absolute;
  inset:0;
@@ -1754,6 +1798,21 @@ body.intro-locked{
   <p class="intro-subtitle">
    A meaningful day · A memorable beginning
   </p>
+
+  <form class="intro-name-form" id="introNameForm" novalidate>
+   <label for="introVisitorName">VUI LÒNG NHẬP HỌ VÀ TÊN ĐỂ MỞ THIỆP</label>
+   <input
+    id="introVisitorName"
+    name="visitorName"
+    type="text"
+    maxlength="80"
+    autocomplete="name"
+    placeholder="Nhập họ và tên của bạn"
+    required
+    aria-required="true"
+   >
+   <p id="introNameStatus" role="status" aria-live="polite">Tên của bạn là thông tin bắt buộc.</p>
+  </form>
 
   <div class="envelope-stage">
 
@@ -2401,25 +2460,6 @@ body.intro-locked{
 </div>
 
 
-<!-- OPTIONAL VISITOR NAME — anonymous viewing is always allowed -->
-<aside class="visitor-note" id="visitorNote" aria-label="Tùy chọn để lại tên">
- <button class="visitor-note-toggle" id="visitorNoteToggle" type="button" aria-expanded="false" aria-controls="visitorNoteBody">
-  <span>Để lại tên (không bắt buộc)</span><span aria-hidden="true">＋</span>
- </button>
- <div class="visitor-note-body" id="visitorNoteBody" hidden>
-  <p>Bạn có thể để lại tên để Duy biết ai đã ghé thăm. Không nhập tên vẫn xem thiệp bình thường.</p>
-  <form id="visitorNameForm">
-   <label for="visitorNameInput">Tên của bạn</label>
-   <input id="visitorNameInput" name="visitorName" type="text" maxlength="80" autocomplete="name" placeholder="Nhập tên (tùy chọn)">
-   <div class="visitor-note-actions">
-    <button type="submit">Gửi tên</button>
-    <button class="secondary" id="visitorNoteClose" type="button">Để sau</button>
-   </div>
-   <span id="visitorNoteStatus" role="status" aria-live="polite"></span>
-  </form>
- </div>
-</aside>
-
 <!-- ADMIN LINK GENERATOR -->
 <div id="adminGenerator" class="admin-generator" hidden>
 
@@ -2694,16 +2734,40 @@ body.intro-locked{
   }
  }
 
- /* 7. GRADUATION ENVELOPE OPENING */
+ /* 7. GRADUATION ENVELOPE OPENING — visitor name is mandatory */
  const intro=document.getElementById("graduationIntro");
  const openButton=document.getElementById("openGraduationEnvelope");
+ const visitorNameInput=document.getElementById("introVisitorName");
+ const visitorNameStatus=document.getElementById("introNameStatus");
  if(intro && openButton){
   document.body.classList.add("intro-locked");
   let isOpening=false;
   openButton.addEventListener("click",function(){
    if(isOpening) return;
+   const visitorName=visitorNameInput ? visitorNameInput.value.trim() : "";
+   if(!visitorName){
+    if(visitorNameStatus){
+     visitorNameStatus.textContent="Vui lòng nhập họ và tên trước khi mở thiệp.";
+     visitorNameStatus.classList.add("is-error");
+    }
+    if(visitorNameInput){
+     visitorNameInput.setAttribute("aria-invalid","true");
+     visitorNameInput.focus();
+    }
+    return;
+   }
+   if(visitorNameInput) visitorNameInput.setAttribute("aria-invalid","false");
+   if(visitorNameStatus){
+    visitorNameStatus.textContent="Cảm ơn bạn. Thiệp đang được mở…";
+    visitorNameStatus.classList.remove("is-error");
+   }
    isOpening=true;
    openButton.disabled=true;
+   if(typeof window.__recordInvitationVisitorName==="function"){
+    window.__recordInvitationVisitorName(visitorName).catch(function(error){
+     console.warn("Visitor name tracking unavailable:",error.message||error);
+    });
+   }
    intro.classList.add("is-opening");
    if(audio) playMusic();
    window.setTimeout(function(){
@@ -2716,20 +2780,14 @@ body.intro-locked{
   });
  }
 
-/* 8. PRIVATE VISIT ANALYTICS — no IP collection; names are voluntary */
+/* 8. PRIVATE VISIT ANALYTICS — required visitor name; no IP collection */
 (function(){
  "use strict";
  const SUPABASE_URL="https://qagzbrrfdizraxxzsrtt.supabase.co";
  const SUPABASE_PUBLISHABLE_KEY="sb_publishable_xLt83CxP94Ydjstwot4Gzg_8HxjLy2e";
- const note=document.getElementById("visitorNote");
- const toggle=document.getElementById("visitorNoteToggle");
- const body=document.getElementById("visitorNoteBody");
- const form=document.getElementById("visitorNameForm");
- const input=document.getElementById("visitorNameInput");
- const close=document.getElementById("visitorNoteClose");
- const status=document.getElementById("visitorNoteStatus");
- if(!note || !window.supabase) return;
+ if(!window.supabase) return;
  const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+
  function getSessionId(){
   let id=sessionStorage.getItem("dqg_analytics_session");
   if(!id){
@@ -2754,7 +2812,7 @@ body.intro-locked{
   if(!raw) return {source:"direct",host:null};
   try{
    const host=new URL(raw).hostname.toLowerCase();
-   if(/(^|\.)facebook\.com$|(^|\.)fb\.com$|(^|\.)fb\.me$/.test(host) || host==="l.facebook.com") {
+   if(/(^|\\.)facebook\\.com$|(^|\\.)fb\\.com$|(^|\\.)fb\\.me$/.test(host) || host==="l.facebook.com"){
     return {source:"facebook",host:host};
    }
    if(host===location.hostname) return {source:"direct",host:host};
@@ -2776,6 +2834,7 @@ body.intro-locked{
   const result=await client.from("invitation_visits").insert(payload);
   if(result.error) throw result.error;
  }
+
  if(!sessionStorage.getItem("dqg_visit_logged")){
   insertEvent("visit",null).then(function(){
    sessionStorage.setItem("dqg_visit_logged","1");
@@ -2783,43 +2842,11 @@ body.intro-locked{
    console.warn("Visit tracking unavailable:",error.message||error);
   });
  }
- if(toggle && body){
-  toggle.addEventListener("click",function(){
-   const expanded=toggle.getAttribute("aria-expanded")==="true";
-   toggle.setAttribute("aria-expanded",String(!expanded));
-   body.hidden=expanded;
-   toggle.lastElementChild.textContent=expanded?"＋":"−";
-  });
- }
- if(close && toggle && body){
-  close.addEventListener("click",function(){
-   body.hidden=true;toggle.setAttribute("aria-expanded","false");
-   toggle.lastElementChild.textContent="＋";
-  });
- }
- if(form && input){
-  form.addEventListener("submit",async function(event){
-   event.preventDefault();
-   const name=input.value.trim();
-   if(!name){status.textContent="Bạn chưa nhập tên.";return;}
-   status.textContent="Đang gửi…";
-   const submit=form.querySelector('button[type="submit"]');
-   if(submit) submit.disabled=true;
-   try{
-    await insertEvent("name_submission",name);
-    status.textContent="Cảm ơn bạn đã để lại lời chào!";
-    input.value="";
-    window.setTimeout(function(){
-     note.hidden=true;
-    },1800);
-   }catch(error){
-    status.textContent="Chưa gửi được. Bạn có thể thử lại sau.";
-    console.warn("Name submission unavailable:",error.message||error);
-    if(submit) submit.disabled=false;
-   }
-  });
- }
-})();
+
+ window.__recordInvitationVisitorName=function(name){
+  return insertEvent("name_submission",name);
+ };
+})();;
 
 })();
 </script>
