@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#090d16">
+<title>Visitor Analytics — Graduation 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0"></script>
+<style>
+:root{color-scheme:dark;--bg:#090d16;--panel:#111927;--line:#ffffff20;--gold:#d8b77b;--muted:#a6afbd;--text:#f4f0e8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#1c2940 0,transparent 55%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+main{width:min(1120px,calc(100% - 32px));margin:0 auto;padding:44px 0 70px}
+.eyebrow{color:var(--gold);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(30px,5vw,48px);margin:8px 0}
+.sub{color:var(--muted);margin:0 0 28px}
+.panel,.stat{background:#111927eF;border:1px solid var(--line);border-radius:12px;padding:22px}
+.login{max-width:470px;margin:10vh auto}.login p{color:var(--muted)}
+label{display:block;color:var(--gold);font-size:12px;margin:14px 0 7px}
+input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:7px;background:#090d16;color:var(--text);font:inherit}
+button{border:1px solid var(--gold);border-radius:7px;padding:11px 16px;background:var(--gold);color:#17130d;font-weight:700;cursor:pointer}
+button.secondary{background:transparent;color:var(--gold)}button:disabled{opacity:.55;cursor:wait}
+.status{color:var(--muted);font-size:13px;min-height:22px;margin-top:12px}
+.hidden{display:none!important}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.stat small{color:var(--muted)}.stat strong{display:block;font-size:30px;font-weight:600;margin-top:8px;font-variant-numeric:tabular-nums}
+.filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:18px 0}.filters input{width:auto;min-width:145px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;min-width:760px}th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-size:13px}
+th{color:var(--gold);font-weight:600;background:#ffffff08}td{color:#e6e9ef}tr:last-child td{border-bottom:0}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:3px 8px;color:var(--muted);font-size:11px}
+.note{color:var(--muted);font-size:12px;margin-top:16px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:16px}.stat strong{font-size:25px}main{padding-top:28px}}
+</style>
+</head>
+<body>
+<main>
+<section id="loginView" class="login panel">
+ <div class="eyebrow">Graduation 2026 · Private area</div>
+ <h1>Visitor Analytics</h1>
+ <p>Đăng nhập bằng email quản trị đã được chỉ định. Supabase sẽ gửi liên kết đăng nhập một lần vào email của bạn.</p>
+ <form id="loginForm">
+  <label for="email">Email quản trị</label>
+  <input id="email" type="email" value="dinhquocduy1106@gmail.com" autocomplete="email" required>
+  <div style="margin-top:14px"><button id="sendLink" type="submit">Gửi liên kết đăng nhập</button></div>
+ </form>
+ <div id="loginStatus" class="status" role="status"></div>
+</section>
+
+<section id="dashboard" class="hidden">
+ <div class="topbar">
+  <div><div class="eyebrow">Graduation 2026 · Private dashboard</div><h1>Thống kê lượt truy cập</h1><div class="sub" id="signedInAs"></div></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="refresh" class="secondary">Làm mới</button><button id="export">Xuất CSV</button><button id="logout" class="secondary">Đăng xuất</button></div>
+ </div>
+ <div class="filters">
+  <label for="fromDate" style="margin:0">Từ ngày</label><input id="fromDate" type="date">
+  <label for="toDate" style="margin:0">Đến ngày</label><input id="toDate" type="date">
+  <button id="applyFilter" class="secondary">Lọc</button>
+  <span class="pill" id="periodLabel">Toàn bộ dữ liệu</span>
+ </div>
+ <div class="stats">
+  <div class="stat"><small>Lượt xem trong khoảng</small><strong id="totalViews">—</strong></div>
+  <div class="stat"><small>Tổng lượt xem tích lũy</small><strong id="allViews">—</strong></div>
+  <div class="stat"><small>Khách để lại tên</small><strong id="namedVisitors">—</strong></div>
+  <div class="stat"><small>Lượt xem ẩn danh</small><strong id="anonymousViews">—</strong></div>
+ </div>
+ <div class="stats">
+  <div class="stat"><small>Nguồn Facebook</small><strong id="facebookViews">—</strong></div>
+  <div class="stat"><small>Nguồn giới thiệu khác</small><strong id="referralViews">—</strong></div>
+  <div class="stat"><small>Truy cập trực tiếp / không rõ</small><strong id="directViews">—</strong></div>
+  <div class="stat"><small>Mobile / Tablet / Desktop</small><strong id="devices" style="font-size:20px">—</strong></div>
+ </div>
+ <section class="panel">
+  <div class="topbar"><div><strong>Khách đã tự nguyện để lại tên</strong><div class="note" style="margin:3px 0">Tên chỉ hiển thị trong khu vực quản trị.</div></div><span class="pill" id="rowCount">0 bản ghi</span></div>
+  <div class="table-wrap"><table><thead><tr><th>Thời gian (VN)</th><th>Tên khách</th><th>Nguồn</th><th>Thiết bị</th></tr></thead><tbody id="visitorRows"><tr><td colspan="4">Chưa có dữ liệu.</td></tr></tbody></table></div>
+  <div id="dataStatus" class="status"></div>
+ </section>
+ <p class="note">Dữ liệu phụ thuộc vào referrer mà trình duyệt cung cấp; Facebook không đồng nghĩa với việc xác định được danh tính tài khoản. Thống kê lượt xem được ghi một lần mỗi tab/phiên. Trang này không thu thập địa chỉ IP.</p>
+</section>
+</main>
+<script>
+(function(){
+ "use strict";
+ const SUPABASE_URL="https://qagzbrrfdizraxxzsrtt.supabase.co";
+ const SUPABASE_KEY="sb_publishable_xLt83CxP94Ydjstwot4Gzg_8HxjLy2e";
+ const ADMIN_EMAIL="dinhquocduy1106@gmail.com";
+ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+ const $=id=>document.getElementById(id);
+ let allRows=[];
+ const loginView=$("loginView"), dashboard=$("dashboard");
+ function showStatus(id,message){$(id).textContent=message||"";}
+ function vnDate(value){return new Intl.DateTimeFormat("vi-VN",{dateStyle:"short",timeStyle:"medium",timeZone:"Asia/Ho_Chi_Minh"}).format(new Date(value));}
+ function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+ function withinPeriod(row){
+  const d=new Date(row.created_at);
+  const from=$("fromDate").value;
+  const to=$("toDate").value;
+  if(from && d < new Date(from+"T00:00:00+07:00")) return false;
+  if(to && d >= new Date(new Date(to+"T00:00:00+07:00").getTime()+86400000)) return false;
+  return true;
+ }
+ function render(){
+  const visits=allRows.filter(r=>r.event_type==="visit");
+  const period=visits.filter(withinPeriod);
+  const named=allRows.filter(r=>r.event_type==="name_submission" && withinPeriod(r));
+  $("totalViews").textContent=period.length.toLocaleString("vi-VN");
+  $("allViews").textContent=visits.length.toLocaleString("vi-VN");
+  $("namedVisitors").textContent=named.length.toLocaleString("vi-VN");
+  $("anonymousViews").textContent=Math.max(0,period.length-named.length).toLocaleString("vi-VN");
+  $("facebookViews").textContent=period.filter(r=>r.source==="facebook").length.toLocaleString("vi-VN");
+  $("referralViews").textContent=period.filter(r=>r.source==="referral").length.toLocaleString("vi-VN");
+  $("directViews").textContent=period.filter(r=>r.source==="direct"||r.source==="unknown").length.toLocaleString("vi-VN");
+  const count=key=>period.filter(r=>r.device_type===key).length;
+  $("devices").textContent=count("mobile")+" / "+count("tablet")+" / "+count("desktop");
+  $("periodLabel").textContent=($("fromDate").value||"Đầu kỳ")+" → "+($("toDate").value||"Hiện tại");
+  const body=$("visitorRows");
+  $("rowCount").textContent=named.length+" bản ghi";
+  if(!named.length){body.innerHTML='<tr><td colspan="4">Chưa có khách để lại tên trong khoảng thời gian này.</td></tr>';return;}
+  body.innerHTML=named.slice().sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).map(r=>'<tr><td>'+escapeHtml(vnDate(r.created_at))+'</td><td>'+escapeHtml(r.visitor_name)+'</td><td>'+escapeHtml(r.source)+'</td><td>'+escapeHtml(r.device_type)+'</td></tr>').join("");
+ }
+ async function loadData(){
+  showStatus("dataStatus","Đang tải dữ liệu…");
+  $("refresh").disabled=true;
+  try{
+   const {data,error}=await db.from("invitation_visits").select("id,session_id,event_type,visitor_name,source,referrer_host,device_type,page_path,created_at").order("created_at",{ascending:false}).limit(10000);
+   if(error) throw error;
+   allRows=data||[];
+   render();
+   showStatus("dataStatus","Đã tải "+allRows.length.toLocaleString("vi-VN")+" bản ghi.");
+  }catch(error){
+   showStatus("dataStatus","Không tải được dữ liệu: "+(error.message||"Lỗi không xác định"));
+  }finally{$("refresh").disabled=false;}
+ }
+ async function updateSession(session){
+  if(!session){loginView.classList.remove("hidden");dashboard.classList.add("hidden");return;}
+  const email=(session.user.email||"").toLowerCase();
+  if(email!==ADMIN_EMAIL){
+   await db.auth.signOut();
+   loginView.classList.remove("hidden");dashboard.classList.add("hidden");
+   showStatus("loginStatus","Email này không có quyền quản trị.");
+   return;
+  }
+  loginView.classList.add("hidden");dashboard.classList.remove("hidden");
+  $("signedInAs").textContent="Đã đăng nhập: "+email;
+  await loadData();
+ }
+ $("loginForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+  const email=$("email").value.trim().toLowerCase();
+  if(email!==ADMIN_EMAIL){showStatus("loginStatus","Email không nằm trong danh sách quản trị.");return;}
+  $("sendLink").disabled=true;showStatus("loginStatus","Đang gửi liên kết đăng nhập…");
+  try{
+   const {error}=await db.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:true}});
+   if(error) throw error;
+   showStatus("loginStatus","Đã gửi liên kết đăng nhập. Hãy mở email (kiểm tra cả Spam) trên thiết bị này.");
+  }catch(error){showStatus("loginStatus","Không gửi được email: "+(error.message||"Vui lòng thử lại."));}
+  finally{$("sendLink").disabled=false;}
+ });
+ $("refresh").addEventListener("click",loadData);
+ $("applyFilter").addEventListener("click",render);
+ $("logout").addEventListener("click",async()=>{await db.auth.signOut();});
+ $("export").addEventListener("click",()=>{
+  const rows=allRows.filter(withinPeriod);
+  const cols=["created_at","event_type","visitor_name","source","referrer_host","device_type","page_path","session_id"];
+  const quote=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const csv="\uFEFF"+[cols.join(","),...rows.map(r=>cols.map(k=>quote(r[k])).join(","))].join("\r\n");
+  const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+  const a=document.createElement("a");a.href=url;a.download="graduation-visitors-"+new Date().toISOString().slice(0,10)+".csv";a.click();URL.revokeObjectURL(url);
+ });
+ db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>updateSession(session),0);});
+ db.auth.getSession().then(({data})=>updateSession(data.session));
+})();
+</script>
+</body>
+</html>
