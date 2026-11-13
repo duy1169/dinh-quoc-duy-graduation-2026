@@ -103,10 +103,12 @@ th{color:var(--gold);font-weight:600;background:#ffffff08}td{color:#e6e9ef}tr:la
   const visits=allRows.filter(r=>r.event_type==="visit");
   const period=visits.filter(withinPeriod);
   const named=allRows.filter(r=>r.event_type==="name_submission" && withinPeriod(r));
+  const namedSessions=new Set(named.map(r=>r.session_id));
+  const anonymousViews=period.filter(r=>!namedSessions.has(r.session_id)).length;
   $("totalViews").textContent=period.length.toLocaleString("vi-VN");
   $("allViews").textContent=visits.length.toLocaleString("vi-VN");
-  $("namedVisitors").textContent=named.length.toLocaleString("vi-VN");
-  $("anonymousViews").textContent=Math.max(0,period.length-named.length).toLocaleString("vi-VN");
+  $("namedVisitors").textContent=namedSessions.size.toLocaleString("vi-VN");
+  $("anonymousViews").textContent=anonymousViews.toLocaleString("vi-VN");
   $("facebookViews").textContent=period.filter(r=>r.source==="facebook").length.toLocaleString("vi-VN");
   $("referralViews").textContent=period.filter(r=>r.source==="referral").length.toLocaleString("vi-VN");
   $("directViews").textContent=period.filter(r=>r.source==="direct"||r.source==="unknown").length.toLocaleString("vi-VN");
